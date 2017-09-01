@@ -1,7 +1,16 @@
+const headers = {headers: {Authorization:'blahblah'}} 
+
 export function fetchCategories () {
-  var headers = {headers: {Authorization:'blahblah'}}
   return fetch('http://localhost:5001/categories', headers)
-    .then((res) => {
-      return res.json()
-    })
+  .then((res) => res.json())
+}
+
+export function fetchPosts () {
+  return fetch('http://localhost:5001/posts', headers)
+    .then((res) => res.json())
+}
+
+export function fetchComments (postId) {
+  return fetch(`http://localhost:5001/posts/${postId}/comments`, headers)
+  .then((res) => res.json()) 
 }

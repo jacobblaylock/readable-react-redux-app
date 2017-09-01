@@ -1,65 +1,54 @@
 import { combineReducers } from 'redux'
 
 import {
+  GET_POSTS,
   ADD_POST,
   EDIT_POST,
+  GET_COMMENTS,
   ADD_COMMENT,
   EDIT_COMMENT,
   VOTE_POST,
   VOTE_COMMENT,
-  ADD_CATEGORIES
+  GET_CATEGORIES,
+  SELECT_CATEGORY
 } from '../actions'
 
-const initialState = {
-  categories: [
-    {
-      name: 'test',
-      path: null
-    },
-    {
-      name: 'test2',
-      path: null
-    } 
-  ],
-  posts: [
-    {
-      id: null,
-      timestamp: null,
-      title: null,
-      body: null,
-      author: null,
-      category: null,
-      voteScore: null,
-      deleted: null
-    }
-  ],
-  comments: [
-    {
-      id: null,
-      parentId: null,
-      timestamp: null,
-      body: null,
-      author: null,
-      voteScore: null,
-      deleted: null,
-      parentDeleted: null
-    }
-  ]
-}
+const initialCategoryState = []
+const initialSelectedCategory = 'react'
+const initialPostsState = []
+const initialCommentsState = []
 
-function categories (state = initialState.categories, action) {
+
+function categories (state = initialCategoryState, action) {
   const { categories } = action
 
   switch (action.type) {
-    case ADD_CATEGORIES :
+    case GET_CATEGORIES :
       return categories
+    case SELECT_CATEGORY :
+      return selectedCategory
     default :
       return state
   }  
 }
 
-function posts (state = initialState.posts, action) {
+function selectedCategory (state = initialSelectedCategory, action) {
+  const { selectedCategory } = action
+
   switch (action.type) {
+    case SELECT_CATEGORY :
+      return selectedCategory
+    default :
+      return state
+  }  
+}
+
+function posts (state = initialPostsState, action) {
+  const { posts } = action
+
+  switch (action.type) {
+    case GET_POSTS :
+      return posts
     case ADD_POST :
       return {}
     case EDIT_POST :
@@ -71,8 +60,11 @@ function posts (state = initialState.posts, action) {
   }
 }
 
-function comments (state = initialState.comments, action) {
+function comments (state = initialCommentsState, action) {
+  const { comments } = action
   switch (action.type) {
+    case GET_COMMENTS :
+      return comments
     case ADD_COMMENT :
       return {}
     case EDIT_COMMENT :
@@ -84,8 +76,10 @@ function comments (state = initialState.comments, action) {
   }  
 }
 
+
 export default combineReducers({
   categories,
   posts,
-  comments
+  comments,
+  selectedCategory
 })

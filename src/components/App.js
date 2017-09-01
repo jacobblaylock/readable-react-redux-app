@@ -1,33 +1,44 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
+import Posts from './Posts'
 import { fetchCategories } from '../util/api'
-import { addCategories } from '../actions'
+import { getCategories } from '../actions'
 
 class App extends Component {
 
   componentDidMount () {
     fetchCategories()
-      .then((res) => this.props.dispatch(addCategories(res)))
+      .then(res => this.props.loadCategories(res))
   }
 
   render () {
+    const { categories } = this.props
+
     return (
       <div>
-          <div>Hello World</div>
+        <h1>Jacob's Readable App</h1>
+          <h2>Categories:</h2>
           <ul>
-            {this.props.categories.map((c) => (
+            {categories.map((c) => (
               <li key={c.name}>{c.name}</li>
             ))}
           </ul>
+          <Posts />
       </div>
     )
   }
 }
 
-function mapStateToProps({ categories }) {
+function mapStateToProps({categories}) {
   return {
     categories
   }
 }
 
-export default connect(mapStateToProps)(App)
+function mapDispatchToProps (dispatch) {
+  return {
+    loadCategories: (data) => dispatch(getCategories(data))
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(App)

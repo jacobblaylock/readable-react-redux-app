@@ -1,10 +1,24 @@
+export const GET_POSTS = 'GET_POSTS'
 export const ADD_POST = 'ADD_POST'
 export const EDIT_POST = 'EDIT_POST'
+export const VOTE_POST = 'VOTE_POST'
+
+export const GET_COMMENTS = 'GET_COMMENTS'
 export const ADD_COMMENT = 'ADD_COMMENT'
 export const EDIT_COMMENT = 'EDIT_COMMENT'
-export const VOTE_POST = 'VOTE_POST'
 export const VOTE_COMMENT = 'VOTE_COMMENT'
-export const ADD_CATEGORIES = 'ADD_CATEGORIES'
+
+export const GET_CATEGORIES = 'GET_CATEGORIES'
+export const SELECT_CATEGORY = 'SELECT_CATEGORY'
+
+
+
+export function getPosts(posts) {
+  return {
+    type: GET_POSTS,
+    posts
+  }
+}
 
 export function addPost({placeholder}) {
   return {
@@ -15,6 +29,13 @@ export function addPost({placeholder}) {
 export function editPost({placeholder}) {
   return {
     type: EDIT_POST
+  }
+}
+
+export function getComments(comments) {
+  return {
+    type: GET_COMMENTS,
+    comments
   }
 }
 
@@ -42,9 +63,16 @@ export function voteComment({placeholder}) {
   }
 }
 
-export function addCategories({categories}) {
+export function getCategories({categories}) {
   return {
-    type: ADD_CATEGORIES,
+    type: GET_CATEGORIES,
     categories
+  }
+}
+
+export function selectCategory(category) {
+  return{
+    type: SELECT_CATEGORY,
+    category
   }
 }
