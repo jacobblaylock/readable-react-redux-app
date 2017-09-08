@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import Posts from './Posts'
 import { fetchCategories } from '../util/api'
-import { getCategories } from '../actions'
+import { getCategories, selectCategory } from '../actions'
 
 class App extends Component {
 
@@ -11,33 +11,40 @@ class App extends Component {
       .then(res => this.props.loadCategories(res))
   }
 
+  setCat = (e) => {
+    this.props.setCategory(e.target.value)
+  }
+
   render () {
-    const { categories } = this.props
+    const { categories, selectedCategory } = this.props
 
     return (
       <div>
         <h1>Jacob's Readable App</h1>
           <h2>Categories:</h2>
-          <ul>
+          <select value={selectedCategory} onChange={this.setCat}>
+              <option value="">Select a category</option>
             {categories.map((c) => (
-              <li key={c.name}>{c.name}</li>
+              <option value={c.name} key={c.name}>{c.name}</option>
             ))}
-          </ul>
+          </select>
           <Posts />
       </div>
     )
   }
 }
 
-function mapStateToProps({categories}) {
+function mapStateToProps({categories, selectedCategory}) {
   return {
-    categories
+    categories,
+    selectedCategory
   }
 }
 
 function mapDispatchToProps (dispatch) {
   return {
-    loadCategories: (data) => dispatch(getCategories(data))
+    loadCategories: (data) => dispatch(getCategories(data)),
+    setCategory: (data) => dispatch(selectCategory(data))
   }
 }
 

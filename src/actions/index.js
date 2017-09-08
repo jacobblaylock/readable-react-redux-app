@@ -70,9 +70,9 @@ export function getCategories({categories}) {
   }
 }
 
-export function selectCategory(category) {
+export function selectCategory(selectedCategory) {
   return{
     type: SELECT_CATEGORY,
-    category
+    selectedCategory
   }
 }

@@ -14,7 +14,7 @@ import {
 } from '../actions'
 
 const initialCategoryState = []
-const initialSelectedCategory = 'react'
+const initialSelectedCategory = ''
 const initialPostsState = []
 const initialCommentsState = []
 
@@ -25,8 +25,6 @@ function categories (state = initialCategoryState, action) {
   switch (action.type) {
     case GET_CATEGORIES :
       return categories
-    case SELECT_CATEGORY :
-      return selectedCategory
     default :
       return state
   }  

@@ -11,6 +11,7 @@ export function fetchPosts () {
 }
 
 export function fetchComments (postId) {
+  console.log(`http://localhost:5001/posts/${postId}/comments`)
   return fetch(`http://localhost:5001/posts/${postId}/comments`, headers)
   .then((res) => res.json()) 
 }

@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { fetchPosts } from '../util/api'
 import { getPosts } from '../actions'
+// import Comment from './Comment'
 
 class Posts extends Component {
   
@@ -32,6 +33,9 @@ class Posts extends Component {
                   <div>Posted: {p.timestamp}</div>
                   <div>Votes: {p.voteScore}</div>
                   <div>Category: {p.category}</div>
+                  {/* <Comment 
+                    postId={p.id}
+                  /> */}
                 </div>
               ))}            
         </div>
