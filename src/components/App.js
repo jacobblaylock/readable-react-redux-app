@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { Route } from 'react-router-dom'
 import { connect } from 'react-redux'
 import Posts from './Posts'
 import { fetchCategories } from '../util/api'
@@ -20,15 +21,20 @@ class App extends Component {
 
     return (
       <div>
-        <h1>Jacob's Readable App</h1>
-          <h2>Categories:</h2>
-          <select value={selectedCategory} onChange={this.setCat}>
-              <option value="">Select a category</option>
-            {categories.map((c) => (
-              <option value={c.name} key={c.name}>{c.name}</option>
-            ))}
-          </select>
-          <Posts />
+        <Route exact path="/" render={() => (
+          <div>
+            <h1>Jacob's Readable App</h1>
+            <h2>Categories:</h2>
+            <select value={selectedCategory} onChange={this.setCat}>
+                <option value="">Select a category</option>
+              {categories.map((c) => (
+                <option value={c.name} key={c.name}>{c.name}</option>
+              ))}
+            </select>
+            <Posts />
+          </div>
+        )}/>
+
       </div>
     )
   }

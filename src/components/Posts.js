@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { fetchPosts } from '../util/api'
 import { getPosts } from '../actions'
-// import Comment from './Comment'
+import Post from './Post'
 
 class Posts extends Component {
   
@@ -27,15 +27,9 @@ class Posts extends Component {
               })
               .map((p) => (
                 <div key={p.id}>
-                  <h3>{p.title}</h3>
-                  <div><p>{p.body}</p></div>
-                  <div>Author: {p.author}</div>
-                  <div>Posted: {p.timestamp}</div>
-                  <div>Votes: {p.voteScore}</div>
-                  <div>Category: {p.category}</div>
-                  {/* <Comment 
-                    postId={p.id}
-                  /> */}
+                  <Post 
+                    post={p}
+                  />
                 </div>
               ))}            
         </div>
