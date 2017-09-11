@@ -1,19 +1,22 @@
 import React, { Component } from 'react'
-import { Route } from 'react-router-dom'
+import { Route, Link, withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
 import Posts from './Posts'
-import { fetchCategories } from '../util/api'
-import { getCategories, selectCategory } from '../actions'
+import { fetchCategories, fetchPosts } from '../util/api'
+import { getCategories, getPosts, selectCategory } from '../actions'
 
 class App extends Component {
 
   componentDidMount () {
     fetchCategories()
       .then(res => this.props.loadCategories(res))
+
+    fetchPosts()
+      .then(res => this.props.loadPosts(res))      
   }
 
   setCat = (e) => {
-    this.props.setCategory(e.target.value)
+    this.props.setCategory(e.target.textContent)
   }
 
   render () {
@@ -25,24 +28,30 @@ class App extends Component {
           <div>
             <h1>Jacob's Readable App</h1>
             <h2>Categories:</h2>
-            <select value={selectedCategory} onChange={this.setCat}>
-                <option value="">Select a category</option>
               {categories.map((c) => (
-                <option value={c.name} key={c.name}>{c.name}</option>
+                <div key={c.name}>
+                  < Link to={'/' + c.path}>{c.name}</Link>
+                </div>
               ))}
-            </select>
             <Posts />
           </div>
         )}/>
-
+        {categories.map((c) => (
+          <Route key={c.name} path={'/' + c.path} render={() => (
+            <Posts 
+              cat={c.name}
+            />
+          )}/>
+        ))}
       </div>
     )
   }
 }
 
-function mapStateToProps({categories, selectedCategory}) {
+function mapStateToProps({ categories, posts, selectedCategory }) {
   return {
     categories,
+    posts,
     selectedCategory
   }
 }
@@ -50,8 +59,9 @@ function mapStateToProps({categories, selectedCategory}) {
 function mapDispatchToProps (dispatch) {
   return {
     loadCategories: (data) => dispatch(getCategories(data)),
+    loadPosts: (data) => dispatch(getPosts(data)),    
     setCategory: (data) => dispatch(selectCategory(data))
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(App)
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(App))

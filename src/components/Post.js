@@ -13,7 +13,7 @@ class Post extends Component {
         <div><p>{post.body}</p></div>
         <div>Author: {post.author}</div>
         <div>Posted: {post.timestamp}</div>
-        <div>Votes: {post.voteScore}</div>
+        <div>Current Score: {post.voteScore}</div>
         <div>Category: {post.category}</div>
       </div>
     )

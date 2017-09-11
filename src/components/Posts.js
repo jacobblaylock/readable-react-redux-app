@@ -1,14 +1,11 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { fetchPosts } from '../util/api'
-import { getPosts } from '../actions'
 import Post from './Post'
 
 class Posts extends Component {
   
     componentDidMount () {
-      fetchPosts()
-        .then(res => this.props.loadPosts(res))
+      console.log(this.props.cat)
     }
   
     render () {
@@ -19,7 +16,7 @@ class Posts extends Component {
           <h2>Posts:</h2>
             {posts
               .filter(p => {
-                if(!selectedCategory || p.category === selectedCategory) {
+                if(!this.props.cat || p.category === this.props.cat) {
                   return true
                 } else {
                   return false
@@ -44,11 +41,5 @@ class Posts extends Component {
     }
   }
   
-  function mapDispatchToProps (dispatch) {
-    return {
-      loadPosts: (data) => dispatch(getPosts(data))
-    }
-  }
-  
-  export default connect(mapStateToProps, mapDispatchToProps)(Posts)
+  export default connect(mapStateToProps)(Posts)
 
