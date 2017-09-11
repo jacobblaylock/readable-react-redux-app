@@ -9,8 +9,8 @@ export const EDIT_COMMENT = 'EDIT_COMMENT'
 export const VOTE_COMMENT = 'VOTE_COMMENT'
 
 export const GET_CATEGORIES = 'GET_CATEGORIES'
-export const SELECT_CATEGORY = 'SELECT_CATEGORY'
 
+export const SORT_METHOD = 'SORT_METHOD'
 
 
 export function getPosts(posts) {
@@ -63,16 +63,19 @@ export function voteComment({placeholder}) {
   }
 }
 
-export function getCategories({categories}) {
+export function getCategories({ categories }) {
   return {
     type: GET_CATEGORIES,
     categories
   }
 }
 
-export function selectCategory(selectedCategory) {
-  return{
-    type: SELECT_CATEGORY,
-    selectedCategory
+export function sortMethod(sorter) {
+  return {
+    type: SORT_METHOD,
+    sorter
   }
 }
+
+
+

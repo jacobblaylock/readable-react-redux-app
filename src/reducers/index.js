@@ -10,16 +10,10 @@ import {
   VOTE_POST,
   VOTE_COMMENT,
   GET_CATEGORIES,
-  SELECT_CATEGORY
+  SORT_METHOD
 } from '../actions'
 
-const initialCategoryState = []
-const initialSelectedCategory = ''
-const initialPostsState = []
-const initialCommentsState = []
-
-
-function categories (state = initialCategoryState, action) {
+function categories (state = [], action) {
   const { categories } = action
 
   switch (action.type) {
@@ -30,18 +24,7 @@ function categories (state = initialCategoryState, action) {
   }  
 }
 
-function selectedCategory (state = initialSelectedCategory, action) {
-  const { selectedCategory } = action
-
-  switch (action.type) {
-    case SELECT_CATEGORY :
-      return selectedCategory
-    default :
-      return state
-  }  
-}
-
-function posts (state = initialPostsState, action) {
+function posts (state = [], action) {
   const { posts } = action
 
   switch (action.type) {
@@ -58,7 +41,7 @@ function posts (state = initialPostsState, action) {
   }
 }
 
-function comments (state = initialCommentsState, action) {
+function comments (state = [], action) {
   const { comments } = action
   switch (action.type) {
     case GET_COMMENTS :
@@ -74,10 +57,21 @@ function comments (state = initialCommentsState, action) {
   }  
 }
 
+function sort (state = 0, action) {
+  const { sorter } = action
+  
+  switch (action.type) {
+    case SORT_METHOD :
+      return sorter
+    default :
+      return state      
+  }
+}
+
 
 export default combineReducers({
   categories,
   posts,
   comments,
-  selectedCategory
+  sort
 })

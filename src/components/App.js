@@ -3,7 +3,7 @@ import { Route, Link, withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
 import Posts from './Posts'
 import { fetchCategories, fetchPosts } from '../util/api'
-import { getCategories, getPosts, selectCategory } from '../actions'
+import { getCategories, getPosts } from '../actions'
 
 class App extends Component {
 
@@ -12,15 +12,11 @@ class App extends Component {
       .then(res => this.props.loadCategories(res))
 
     fetchPosts()
-      .then(res => this.props.loadPosts(res))      
-  }
-
-  setCat = (e) => {
-    this.props.setCategory(e.target.textContent)
+      .then(res => this.props.loadPosts(res))
   }
 
   render () {
-    const { categories, selectedCategory } = this.props
+    const { categories } = this.props
 
     return (
       <div>
@@ -33,7 +29,7 @@ class App extends Component {
                   < Link to={'/' + c.path}>{c.name}</Link>
                 </div>
               ))}
-            <Posts />
+            <Posts/>
           </div>
         )}/>
         {categories.map((c) => (
@@ -48,19 +44,17 @@ class App extends Component {
   }
 }
 
-function mapStateToProps({ categories, posts, selectedCategory }) {
+function mapStateToProps({ categories, posts }) {
   return {
     categories,
-    posts,
-    selectedCategory
+    posts
   }
 }
 
 function mapDispatchToProps (dispatch) {
   return {
     loadCategories: (data) => dispatch(getCategories(data)),
-    loadPosts: (data) => dispatch(getPosts(data)),    
-    setCategory: (data) => dispatch(selectCategory(data))
+    loadPosts: (data) => dispatch(getPosts(data))
   }
 }
 
