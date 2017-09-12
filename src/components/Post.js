@@ -15,6 +15,7 @@ class Post extends Component {
         <div>Posted: {prettyDate(post.timestamp)}</div>
         <div>Current Score: {post.voteScore}</div>
         <div>Category: {post.category}</div>
+        <div>Comments: {post.comments ? post.comments.length : 0}</div>
       </div>
     )
   }

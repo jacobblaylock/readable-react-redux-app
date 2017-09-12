@@ -2,17 +2,14 @@ import React, { Component } from 'react'
 import { Route, Link, withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
 import Posts from './Posts'
-import { fetchCategories, fetchPosts } from '../util/api'
-import { getCategories, getPosts } from '../actions'
+import { fetchComments } from '../util/api'
+import { getCategories, getPosts, getComments, fetchCategories, fetchPosts } from '../actions'
 
 class App extends Component {
 
   componentDidMount () {
-    fetchCategories()
-      .then(res => this.props.loadCategories(res))
-
-    fetchPosts()
-      .then(res => this.props.loadPosts(res))
+    this.props.loadCategories()
+    this.props.loadPosts()
   }
 
   render () {
@@ -53,8 +50,9 @@ function mapStateToProps({ categories, posts }) {
 
 function mapDispatchToProps (dispatch) {
   return {
-    loadCategories: (data) => dispatch(getCategories(data)),
-    loadPosts: (data) => dispatch(getPosts(data))
+    loadCategories: () => dispatch(fetchCategories()),
+    loadPosts: (data) => dispatch(fetchPosts(data)),
+    loadComments: (data) => dispatch(getComments(data)),
   }
 }
 

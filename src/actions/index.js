@@ -1,3 +1,5 @@
+import * as API from '../util/api'
+
 export const GET_POSTS = 'GET_POSTS'
 export const ADD_POST = 'ADD_POST'
 export const EDIT_POST = 'EDIT_POST'
@@ -12,13 +14,27 @@ export const GET_CATEGORIES = 'GET_CATEGORIES'
 
 export const SORT_METHOD = 'SORT_METHOD'
 
-
 export function getPosts(posts) {
   return {
     type: GET_POSTS,
     posts
   }
 }
+
+export const fetchPosts = () => dispatch => (
+  API
+    .fetchPosts()
+    .then(res => dispatch(getPosts(res)))
+) 
+ 
+
+// export const fetchCommentCount = (post) => dispatch => (
+//     API
+//       .fetchComments(post.id)
+//       .then(res => {
+//         post.comments = res.map(comment => comment.id)
+//       })
+// )
 
 export function addPost({placeholder}) {
   return {
@@ -69,6 +85,12 @@ export function getCategories({ categories }) {
     categories
   }
 }
+
+export const fetchCategories = () => dispatch => (
+  API
+    .fetchCategories()
+    .then(res => dispatch(getCategories(res)))
+)
 
 export function sortMethod(sorter) {
   return {
