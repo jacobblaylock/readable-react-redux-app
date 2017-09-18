@@ -6,10 +6,6 @@ import { sorter } from '../util/sort'
 
 class Posts extends Component {
   
-    componentDidMount () {
-      // console.log(this.props)
-    }
-
     render () {
       const { posts, sort, setSortMethod } = this.props
   

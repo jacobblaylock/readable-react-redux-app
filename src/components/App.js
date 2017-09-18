@@ -2,8 +2,7 @@ import React, { Component } from 'react'
 import { Route, Link, withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
 import Posts from './Posts'
-import { fetchComments } from '../util/api'
-import { getCategories, getPosts, getComments, fetchCategories, fetchPosts } from '../actions'
+import { getComments, fetchCategories, fetchPosts } from '../actions'
 
 class App extends Component {
 
@@ -13,7 +12,7 @@ class App extends Component {
   }
 
   render () {
-    const { categories } = this.props
+    const { categories, postsRequested } = this.props
 
     return (
       <div>
@@ -26,7 +25,8 @@ class App extends Component {
                   < Link to={'/' + c.path}>{c.name}</Link>
                 </div>
               ))}
-            <Posts/>
+            {postsRequested ? <div>Loading...</div> : <Posts/>}
+            
           </div>
         )}/>
         {categories.map((c) => (
@@ -41,9 +41,10 @@ class App extends Component {
   }
 }
 
-function mapStateToProps({ categories, posts }) {
+function mapStateToProps({ categories, postsRequested, posts }) {
   return {
     categories,
+    postsRequested,
     posts
   }
 }
