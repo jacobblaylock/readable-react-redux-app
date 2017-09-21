@@ -30,13 +30,7 @@ class App extends Component {
             
           </div>
         )}/>
-        {categories.map((c) => (
-          <Route exact path={'/' + c.path} key={c.name} render={() => (
-            <Posts 
-              cat={c.name}
-            />
-          )}/>
-        ))}
+        <Route exact path={'/:category'} component={Posts}/>
         <Route path={'/:category/:postid'} component={PostDetail}/>          
       </div>
     )
@@ -54,7 +48,7 @@ function mapStateToProps({ categories, postsRequested, posts }) {
 function mapDispatchToProps (dispatch) {
   return {
     loadCategories: () => dispatch(fetchCategories()),
-    loadPosts: (url) => dispatch(fetchPosts(url)),
+    loadPosts: () => dispatch(fetchPosts()),
     loadComments: (data) => dispatch(getComments(data)),
   }
 }

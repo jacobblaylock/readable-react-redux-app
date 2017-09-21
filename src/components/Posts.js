@@ -7,7 +7,7 @@ import { sorter } from '../util/sort'
 class Posts extends Component {
   
     render () {
-      const { posts, sort, setSortMethod } = this.props
+      const { posts, sort, category, setSortMethod } = this.props
   
       return (
         <div>
@@ -18,7 +18,7 @@ class Posts extends Component {
           <button onClick={() => setSortMethod(sorter.dateDesc)}>Date Desc</button>
             {posts
               .filter(p => {
-                if(!this.props.cat || p.category === this.props.cat) {
+                if(!category || p.category === category) {
                   return true
                 } else {
                   return false
@@ -38,10 +38,11 @@ class Posts extends Component {
     }
   }
   
-  function mapStateToProps({ posts, sort }) {
+  function mapStateToProps({ posts, sort }, ownProps) {
     return {
       posts,
-      sort
+      sort,
+      category: ownProps.match ? ownProps.match.params.category : undefined
     }
   }
 

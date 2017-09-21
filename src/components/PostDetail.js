@@ -6,10 +6,6 @@ import Post from './Post'
 
 class PostDetail extends Component {
 
-  componentDidMount () {
-    console.log(this.props)
-  }
-
   render () {
     const { post } = this.props
 
@@ -42,9 +38,8 @@ class PostDetail extends Component {
 }
 
 function mapStateToProps({ posts }, ownProps) {
-  let post = posts.find(p => p.id === ownProps.match.params.postid)
   return {
-    post: post
+    post: posts.find(p => p.id === ownProps.match.params.postid)
   }
 }
 
