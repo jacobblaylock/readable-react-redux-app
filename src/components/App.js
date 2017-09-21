@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { Route, Link, withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
 import Posts from './Posts'
+import PostDetail from './PostDetail'
 import { getComments, fetchCategories, fetchPosts } from '../actions'
 
 class App extends Component {
@@ -16,13 +17,13 @@ class App extends Component {
 
     return (
       <div>
+        <h1>Jacob's Readable App</h1>
         <Route exact path="/" render={() => (
           <div>
-            <h1>Jacob's Readable App</h1>
             <h2>Categories:</h2>
               {categories.map((c) => (
                 <div key={c.name}>
-                  < Link to={'/' + c.path}>{c.name}</Link>
+                  <Link to={'/' + c.path}>{c.name}</Link>
                 </div>
               ))}
             {postsRequested ? <div>Loading...</div> : <Posts/>}
@@ -30,12 +31,13 @@ class App extends Component {
           </div>
         )}/>
         {categories.map((c) => (
-          <Route key={c.name} path={'/' + c.path} render={() => (
+          <Route exact path={'/' + c.path} key={c.name} render={() => (
             <Posts 
               cat={c.name}
             />
           )}/>
         ))}
+        <Route path={'/:category/:postid'} component={PostDetail}/>          
       </div>
     )
   }
@@ -52,7 +54,7 @@ function mapStateToProps({ categories, postsRequested, posts }) {
 function mapDispatchToProps (dispatch) {
   return {
     loadCategories: () => dispatch(fetchCategories()),
-    loadPosts: (data) => dispatch(fetchPosts(data)),
+    loadPosts: (url) => dispatch(fetchPosts(url)),
     loadComments: (data) => dispatch(getComments(data)),
   }
 }

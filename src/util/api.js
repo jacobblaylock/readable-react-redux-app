@@ -5,15 +5,17 @@ export function fetchCategories () {
   .then((res) => res.json())
 }
 
-export function fetchPosts () {
-  return fetch('http://localhost:5001/posts', headers)
+export function fetchPosts (category) {
+  let url = 'http://localhost:5001/posts' 
+  url = category ? url + '/' + category : url
+  return fetch(url, headers)
     .then((res) => res.json())
     .then(posts => {
       return Promise.all(posts.map(post => {
           return new Promise(resolve => resolve(
             fetchComments(post.id)
             .then(comments => {
-              post.commentCount = comments.length
+              post.comments = comments
               return post
             })
           ))
