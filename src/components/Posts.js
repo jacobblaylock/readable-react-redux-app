@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { sortMethod } from '../actions'
 import Post from './Post'
+import Categories from './Categories'
 import { sorter } from '../util/sort'
 
 class Posts extends Component {
@@ -11,6 +12,7 @@ class Posts extends Component {
   
       return (
         <div>
+          <Categories/>             
           <h2>{this.props.cat ? `Posts for ${this.props.cat}` : 'Posts:'}</h2>
           <button onClick={() => setSortMethod(sorter.voteAsc)}>Votes Asc</button>
           <button onClick={() => setSortMethod(sorter.voteDesc)}>Votes Desc</button>
