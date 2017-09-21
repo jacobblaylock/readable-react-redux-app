@@ -7,10 +7,10 @@ export function fetchCategories () {
 
 export function fetchPosts (category) {
   let url = 'http://localhost:5001/' 
-  url = category ? url + category + '/posts' : url + 'posts'
+  url = category ? `${url}${category}/posts` : `${url}posts`
   console.log(url)
   return fetch(url, headers)
-    .then((res) => res.json())
+    .then(res => res.json())
     .then(posts => {
       return Promise.all(posts.map(post => {
           return new Promise(resolve => resolve(
@@ -22,6 +22,23 @@ export function fetchPosts (category) {
           ))
         }))
     })
+}
+
+export function fetchPostDetail (postId) {
+  let url = `http://localhost:5001/posts/${postId}` 
+
+    return fetch(url, headers)
+    .then(res => res.json())
+    .then(post => {
+      return new Promise(resolve => resolve(
+        fetchComments(post.id)
+        .then(comments => {
+          post.comments = comments
+          return [post]
+        })
+      ))
+    })
+
 }
 
 export function fetchComments (postId) {

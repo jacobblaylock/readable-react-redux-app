@@ -21,15 +21,24 @@ export function receivePosts(posts) {
   }
 }
 
-export const fetchPosts = (url) => (dispatch, getState) => {
+export const fetchPosts = (category) => (dispatch, getState) => {
   dispatch(requestPosts(true))
   API
-  .fetchPosts(url)
+  .fetchPosts(category)
   .then(posts => {
     dispatch(receivePosts(posts))
     dispatch(requestPosts(false))
   })
+}
 
+export const fetchPostDetail = (postId) => (dispatch, getState) => {
+  dispatch(requestPosts(true))
+  API
+  .fetchPostDetail(postId)
+  .then(post => {
+    dispatch(receivePosts(post))
+    dispatch(requestPosts(false))
+  })
 }
 
 export function getComments(comments) {

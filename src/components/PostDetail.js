@@ -1,9 +1,16 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
+import { fetchPostDetail } from '../actions'
 import { prettyDate } from '../util/date'
 import Comment from './Comment'
 
 class PostDetail extends Component {
+
+  componentDidMount () {
+    console.log(this.props)
+    if(!this.props.post)
+      this.props.loadPostDetail(this.props.match.params.postid)
+  }
 
   render () {
     const { post } = this.props
@@ -37,4 +44,10 @@ function mapStateToProps({ posts }, ownProps) {
   }
 }
 
-export default connect(mapStateToProps)(PostDetail)
+function mapDispatchToProps (dispatch) {
+  return {
+    loadPostDetail: (postId) => dispatch(fetchPostDetail(postId))
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(PostDetail)

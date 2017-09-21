@@ -59,7 +59,7 @@ class Posts extends Component {
   function mapDispatchToProps (dispatch) {
     return {
       setSortMethod: (data) => dispatch(sortMethod(data)),
-      loadPosts: (url) => dispatch(fetchPosts(url))
+      loadPosts: (category) => dispatch(fetchPosts(category))
     }
   }
 
