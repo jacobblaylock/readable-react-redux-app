@@ -21,10 +21,10 @@ export function receivePosts(posts) {
   }
 }
 
-export const fetchPosts = () => (dispatch, getState) => {
+export const fetchPosts = (url) => (dispatch, getState) => {
   dispatch(requestPosts(true))
   API
-  .fetchPosts()
+  .fetchPosts(url)
   .then(posts => {
     dispatch(receivePosts(posts))
     dispatch(requestPosts(false))

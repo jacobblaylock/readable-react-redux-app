@@ -12,7 +12,7 @@ class Post extends Component {
     return (
       <div>
         <h3>{post.title}</h3>
-        <Link to={'/' + post.category + '/' + post.id}>{post.id}</Link>
+        <Link to={'/' + post.category + '/' + post.id}>Edit Post</Link>
         <div><p>{post.body}</p></div>
         <div>Author: {post.author}</div>
         <div>Posted: {prettyDate(post.timestamp)}</div>

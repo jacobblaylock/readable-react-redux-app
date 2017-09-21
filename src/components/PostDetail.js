@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { prettyDate } from '../util/date'
 import Comment from './Comment'
-import Post from './Post'
 
 class PostDetail extends Component {
 
@@ -25,16 +24,11 @@ class PostDetail extends Component {
               comments={post.comments}
             />
           } 
-
           </div>
         }
-
-         
-
       </div>
     )
   }
-
 }
 
 function mapStateToProps({ posts }, ownProps) {

@@ -6,8 +6,9 @@ export function fetchCategories () {
 }
 
 export function fetchPosts (category) {
-  let url = 'http://localhost:5001/posts' 
-  url = category ? url + '/' + category : url
+  let url = 'http://localhost:5001/' 
+  url = category ? url + category + '/posts' : url + 'posts'
+  console.log(url)
   return fetch(url, headers)
     .then((res) => res.json())
     .then(posts => {
