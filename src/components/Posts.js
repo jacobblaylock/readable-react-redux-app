@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
+import { Link } from 'react-router-dom'
 import { sortMethod, fetchPosts } from '../actions'
 import Post from './Post'
 import Categories from './Categories'
@@ -17,13 +18,16 @@ class Posts extends Component {
       return (
         <div>
           {postsRequested ? <div>Loading...</div> :  
-            <div>         
+            <div>
+              <Link to="/">Home</Link>
               <Categories/>             
               <h2>{this.props.cat ? `Posts for ${this.props.cat}` : 'Posts:'}</h2>
-              <button onClick={() => setSortMethod(sorter.voteAsc)}>Votes Asc</button>
-              <button onClick={() => setSortMethod(sorter.voteDesc)}>Votes Desc</button>
-              <button onClick={() => setSortMethod(sorter.dateAsc)}>Date Asc</button>
-              <button onClick={() => setSortMethod(sorter.dateDesc)}>Date Desc</button>
+              <div>
+                <button onClick={() => setSortMethod(sorter.voteAsc)}>Votes Asc</button>
+                <button onClick={() => setSortMethod(sorter.voteDesc)}>Votes Desc</button>
+                <button onClick={() => setSortMethod(sorter.dateAsc)}>Date Asc</button>
+                <button onClick={() => setSortMethod(sorter.dateDesc)}>Date Desc</button>
+              </div>
                 {posts
                   .filter(p => {
                     if(!category || p.category === category) {

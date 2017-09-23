@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
+import { Link } from 'react-router-dom'
 import { fetchPostDetail } from '../actions'
 import { prettyDate } from '../util/date'
 import Comment from './Comment'
@@ -7,9 +8,11 @@ import Comment from './Comment'
 class PostDetail extends Component {
 
   componentDidMount () {
-    console.log(this.props)
-    if(!this.props.post)
-      this.props.loadPostDetail(this.props.match.params.postid)
+    !this.props.post && this.props.loadPostDetail(this.props.match.params.postid)
+  }
+
+  goBack = () => {
+    this.props.history.goBack()
   }
 
   render () {
@@ -17,6 +20,7 @@ class PostDetail extends Component {
 
     return (
       <div>
+        <button onClick={this.goBack}>Back</button>
         {post &&
           <div> 
             <h3>{post.title}</h3>
