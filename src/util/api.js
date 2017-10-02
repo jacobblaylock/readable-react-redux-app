@@ -1,4 +1,9 @@
-const headers = {headers: {Authorization:'blahblah'}} 
+const headers = {
+  headers: {
+    Authorization:'blahblah',
+    'Content-Type': 'application/json'
+  }
+} 
 
 export function fetchCategories () {
   return fetch('http://localhost:5001/categories', headers)
@@ -8,7 +13,6 @@ export function fetchCategories () {
 export function fetchPosts (category) {
   let url = 'http://localhost:5001/' 
   url = category ? `${url}${category}/posts` : `${url}posts`
-  console.log(url)
   return fetch(url, headers)
     .then(res => res.json())
     .then(posts => {
@@ -44,4 +48,18 @@ export function fetchPostDetail (postId) {
 export function fetchComments (postId) {
   return fetch(`http://localhost:5001/posts/${postId}/comments`, headers)
   .then((res) => res.json())
+}
+
+export function fetchVote (postId, vote) {
+  let url = `http://localhost:5001/posts/${postId}`
+  let options = {
+    headers: headers.headers,
+    method: 'POST',
+    body: JSON.stringify({
+      option: vote
+    })
+  }
+
+   return fetch(url, options)
+    .then(res => res.json())
 }

@@ -30,6 +30,7 @@ class Posts extends Component {
               </div>
                 {posts
                   .filter(p => {
+                    console.log(category)
                     if(!category || p.category === category) {
                       return true
                     } else {

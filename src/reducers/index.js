@@ -5,7 +5,9 @@ import {
   RECEIVE_POSTS,
   GET_COMMENTS,
   GET_CATEGORIES,
-  SORT_METHOD
+  SORT_METHOD,
+  VOTE_UP,
+  VOTE_DOWN
 } from '../actions'
 
 function categories (state = [], action) {
@@ -20,11 +22,30 @@ function categories (state = [], action) {
 }
 
 function posts (state = [], action) {
-  const { posts } = action
+  const { posts, postId } = action
+  const i = state.findIndex(post => post.id === postId)
 
   switch (action.type) {
     case RECEIVE_POSTS :
       return posts
+    case VOTE_UP :
+      return [
+        ...state.slice(0,i),
+        {
+          ...state[i],
+          voteScore: state[i].voteScore + 1      
+        },
+        ...state.slice(i + 1)
+      ]
+    case VOTE_DOWN : 
+      return [
+        ...state.slice(0,i),
+        {
+          ...state[i],
+          voteScore: state[i].voteScore - 1      
+        },
+        ...state.slice(i + 1)
+      ]   
     default :
       return state
   }
@@ -51,7 +72,7 @@ function comments (state = [], action) {
   }  
 }
 
-function sort (state = 0, action) {
+function sort (state = '', action) {
   const { sorter } = action
   
   switch (action.type) {
@@ -61,7 +82,6 @@ function sort (state = 0, action) {
       return state      
   }
 }
-
 
 export default combineReducers({
   categories,

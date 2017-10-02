@@ -1,9 +1,9 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { Link } from 'react-router-dom'
 import { fetchPostDetail } from '../actions'
 import { prettyDate } from '../util/date'
 import Comment from './Comment'
+import Vote from './Vote'
 
 class PostDetail extends Component {
 
@@ -28,6 +28,9 @@ class PostDetail extends Component {
             <div>Author: {post.author}</div>
             <div>Posted: {prettyDate(post.timestamp)}</div>
             <div>Current Score: {post.voteScore}</div>
+            <Vote 
+              postId={post.id}
+            />              
             <div>Category: {post.category}</div>
             <div>Comments: {post.comments ? post.comments.length : 0}</div>
           {post.comments &&

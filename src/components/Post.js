@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { prettyDate } from '../util/date'
-
+import Vote from './Vote'
 
 class Post extends Component {
 
@@ -17,12 +17,14 @@ class Post extends Component {
         <div>Author: {post.author}</div>
         <div>Posted: {prettyDate(post.timestamp)}</div>
         <div>Current Score: {post.voteScore}</div>
+        <Vote 
+          postId={post.id}
+        />
         <div>Category: {post.category}</div>
         <div>Comments: {post.comments ? post.comments.length : 0}</div>
       </div>
     )
   }
-
 }
 
 export default connect()(Post)

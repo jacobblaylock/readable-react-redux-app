@@ -7,6 +7,9 @@ export const GET_COMMENTS = 'GET_COMMENTS'
 export const GET_CATEGORIES = 'GET_CATEGORIES'
 export const SORT_METHOD = 'SORT_METHOD'
 
+export const VOTE_UP = 'VOTE_UP'
+export const VOTE_DOWN = 'VOTE_DOWN'
+
 export function requestPosts(requestingPosts) {
   return {
     type: REQUEST_POSTS,
@@ -67,6 +70,32 @@ export function sortMethod(sorter) {
     sorter
   }
 }
+
+export function voteUp(postId) {
+  return {
+    type: VOTE_UP,
+    postId
+  }
+}
+
+export function voteDown(postId) {
+  return {
+    type: VOTE_DOWN,
+    postId
+  }
+}
+
+export const fetchVote = (postId, vote) => dispatch => (
+  API
+    .fetchVote(postId, vote)
+      .then(res => {
+        if(vote === 'upVote'){
+          dispatch(voteUp(postId))
+        }else if(vote === 'downVote') {
+          dispatch(voteDown(postId))
+        }
+      })
+)
 
 
 
