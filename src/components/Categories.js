@@ -6,7 +6,10 @@ import { fetchCategories } from '../actions'
 class Categories extends Component {
 
   componentDidMount () {
-    this.props.loadCategories()
+    if(this.props.categories.length < 1){
+      this.props.loadCategories()
+    }
+    
   }
   
     render () {

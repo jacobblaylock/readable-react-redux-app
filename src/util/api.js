@@ -50,8 +50,22 @@ export function fetchComments (postId) {
   .then((res) => res.json())
 }
 
-export function fetchVote (postId, vote) {
+export function fetchPostVote (postId, vote) {
   let url = `http://localhost:5001/posts/${postId}`
+  let options = {
+    headers: headers.headers,
+    method: 'POST',
+    body: JSON.stringify({
+      option: vote
+    })
+  }
+
+   return fetch(url, options)
+    .then(res => res.json())
+}
+
+export function fetchCommentVote (commentId, vote) {
+  let url = `http://localhost:5001/comments/${commentId}`
   let options = {
     headers: headers.headers,
     method: 'POST',

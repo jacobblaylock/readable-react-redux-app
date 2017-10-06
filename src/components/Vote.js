@@ -3,27 +3,29 @@ import { connect } from 'react-redux'
 import { fetchVote } from '../actions'
 
 class Vote extends Component {
-  
+
   render () {
+    
+    const { postId, commentId } = this.props
 
     return (
       <div>
-        <button onClick={() => this.props.processVote(this.props.postId, 'upVote')}>+</button>
-        <button onClick={() => this.props.processVote(this.props.postId, 'downVote')}>-</button>
+        <button onClick={() => this.props.processVote(postId, commentId, 'upVote')}>+</button>
+        <button onClick={() => this.props.processVote(postId, commentId, 'downVote')}>-</button>
       </div>
     )
   }
 }
 
-function mapStateToProps({ posts }) {
+function mapStateToProps () {
   return {
-    posts
+    
   }
 }
 
 function mapDispatchToProps (dispatch) {
   return {
-    processVote: (postId, vote) => dispatch(fetchVote(postId, vote))
+    processVote: (postId, commentId, vote) => dispatch(fetchVote(postId, commentId, vote))
   }
 }
 

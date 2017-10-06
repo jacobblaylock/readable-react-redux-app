@@ -7,8 +7,10 @@ export const GET_COMMENTS = 'GET_COMMENTS'
 export const GET_CATEGORIES = 'GET_CATEGORIES'
 export const SORT_METHOD = 'SORT_METHOD'
 
-export const VOTE_UP = 'VOTE_UP'
-export const VOTE_DOWN = 'VOTE_DOWN'
+export const VOTE_UP_POST = 'VOTE_UP_POST'
+export const VOTE_DOWN_POST = 'VOTE_DOWN_POST'
+export const VOTE_UP_COMMENT = 'VOTE_UP_COMMENT'
+export const VOTE_DOWN_COMMENT = 'VOTE_DOWN_COMMENT'
 
 export function requestPosts(requestingPosts) {
   return {
@@ -71,31 +73,59 @@ export function sortMethod(sorter) {
   }
 }
 
-export function voteUp(postId) {
+export function voteUpPost(postId) {
   return {
-    type: VOTE_UP,
+    type: VOTE_UP_POST,
     postId
   }
 }
 
-export function voteDown(postId) {
+export function voteDownPost(postId) {
   return {
-    type: VOTE_DOWN,
+    type: VOTE_DOWN_POST,
     postId
   }
 }
 
-export const fetchVote = (postId, vote) => dispatch => (
-  API
-    .fetchVote(postId, vote)
+export function voteUpComment(postId, commentId) {
+  return {
+    type: VOTE_UP_COMMENT,
+    postId,
+    commentId
+  }
+}
+
+export function voteDownComment(postId, commentId) {
+  return {
+    type: VOTE_DOWN_COMMENT,
+    postId,
+    commentId
+  }
+}
+
+export const fetchVote = (postId, commentId, vote) => dispatch => {
+  if(!commentId) {
+     return API
+      .fetchPostVote(postId, vote)
+        .then(res => {
+          if(vote === 'upVote'){
+            dispatch(voteUpPost(postId))
+          }else if(vote === 'downVote') {
+            dispatch(voteDownPost(postId))
+          }
+        })
+  }else{
+    return API
+    .fetchCommentVote(commentId, vote)
       .then(res => {
         if(vote === 'upVote'){
-          dispatch(voteUp(postId))
+          dispatch(voteUpComment(postId, commentId))
         }else if(vote === 'downVote') {
-          dispatch(voteDown(postId))
+          dispatch(voteDownComment(postId, commentId))
         }
       })
-)
+  }
+}
 
 
 

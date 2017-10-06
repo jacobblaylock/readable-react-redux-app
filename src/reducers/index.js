@@ -3,11 +3,12 @@ import { combineReducers } from 'redux'
 import {
   REQUEST_POSTS,
   RECEIVE_POSTS,
-  GET_COMMENTS,
   GET_CATEGORIES,
   SORT_METHOD,
-  VOTE_UP,
-  VOTE_DOWN
+  VOTE_UP_POST,
+  VOTE_DOWN_POST,
+  VOTE_UP_COMMENT,
+  VOTE_DOWN_COMMENT
 } from '../actions'
 
 function categories (state = [], action) {
@@ -22,13 +23,16 @@ function categories (state = [], action) {
 }
 
 function posts (state = [], action) {
-  const { posts, postId } = action
-  const i = state.findIndex(post => post.id === postId)
+  const { posts = {}, postId, commentId} = action
+  let i, c
+  if(postId) i = state.findIndex(post => post.id === postId)
+  if(i > -1 && commentId) c = state[i].comments.findIndex(comment => comment.id === commentId)
 
   switch (action.type) {
     case RECEIVE_POSTS :
       return posts
-    case VOTE_UP :
+    case VOTE_UP_POST :
+      
       return [
         ...state.slice(0,i),
         {
@@ -37,7 +41,7 @@ function posts (state = [], action) {
         },
         ...state.slice(i + 1)
       ]
-    case VOTE_DOWN : 
+    case VOTE_DOWN_POST :
       return [
         ...state.slice(0,i),
         {
@@ -45,7 +49,41 @@ function posts (state = [], action) {
           voteScore: state[i].voteScore - 1      
         },
         ...state.slice(i + 1)
-      ]   
+      ]
+    case VOTE_UP_COMMENT :
+      return [
+        ...state.slice(0,i),
+        {
+          ...state[i],
+          comments: [
+            ...state[i].comments.slice(0,c),
+            {
+              ...state[i].comments[c],
+              voteScore: state[i].comments[c].voteScore + 1
+  
+            },
+            ...state[i].comments.slice(c + 1)                
+          ]
+        },
+        ...state.slice(i + 1)
+      ]
+    case VOTE_DOWN_COMMENT :
+      return [
+        ...state.slice(0,i),
+        {
+          ...state[i],
+          comments: [
+            ...state[i].comments.slice(0,c),
+            {
+              ...state[i].comments[c],
+              voteScore: state[i].comments[c].voteScore - 1
+
+            },
+            ...state[i].comments.slice(c + 1)                
+          ]
+        },
+        ...state.slice(i + 1)
+      ]  
     default :
       return state
   }
@@ -60,16 +98,6 @@ function postsRequested (state = false, action) {
     default :
       return state
   }
-}
-
-function comments (state = [], action) {
-  const { comments } = action
-  switch (action.type) {
-    case GET_COMMENTS :
-      return comments
-    default :
-      return state
-  }  
 }
 
 function sort (state = '', action) {
@@ -87,6 +115,5 @@ export default combineReducers({
   categories,
   postsRequested,
   posts,
-  comments,
   sort
 })

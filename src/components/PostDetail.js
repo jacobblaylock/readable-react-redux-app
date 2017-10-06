@@ -25,14 +25,14 @@ class PostDetail extends Component {
           <div> 
             <h3>{post.title}</h3>
             <div><p>{post.body}</p></div>
+            <div>Category: {post.category}</div>
             <div>Author: {post.author}</div>
             <div>Posted: {prettyDate(post.timestamp)}</div>
+            <div>Comments: {post.comments ? post.comments.length : 0}</div>        
             <div>Current Score: {post.voteScore}</div>
             <Vote 
               postId={post.id}
-            />              
-            <div>Category: {post.category}</div>
-            <div>Comments: {post.comments ? post.comments.length : 0}</div>
+            />          
           {post.comments &&
             <Comment 
               comments={post.comments}

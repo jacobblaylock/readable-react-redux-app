@@ -1,5 +1,8 @@
 import React, { Component } from 'react'
 
+import Vote from './Vote'
+import { prettyDate } from '../util/date'
+
 class Comment extends Component {
   
     render () {
@@ -10,8 +13,15 @@ class Comment extends Component {
           <h4>Comments:</h4>
             {comments.map(c => (
               <div key={c.id}>
-                <h5>{c.id}</h5>
-                <p>{c.body}</p>
+                  <div>{c.body}</div>
+                  <div>Author: {c.author}</div>
+                  <div>Posted: {prettyDate(c.timestamp)}</div>                  
+                  <div>{c.voteScore}</div>
+                  <Vote 
+                    postId={c.parentId}
+                    commentId={c.id}
+                  />                    
+                  <br/>
               </div>
             ))}
         </div>
