@@ -21,7 +21,7 @@ class Post extends Component {
         <Vote 
           postId={post.id}
         />
-        <Link to={'/' + post.category + '/' + post.id}>Edit Post</Link>        
+        <Link to={'/' + post.category + '/' + post.id}>More Details</Link>        
       </div>
     )
   }

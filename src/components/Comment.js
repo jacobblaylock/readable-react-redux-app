@@ -8,26 +8,23 @@ import { prettyDate } from '../util/date'
 class Comment extends Component {
 
     render () {
-      const { comments } = this.props
+      const { comment } = this.props
   
       return (
-        <div>
-          <h4>Comments:</h4>
-            {comments.map(c => (
-              <div key={c.id}>
-                  <div>{c.body}</div>
-                  <div>Author: {c.author}</div>
-                  <div>Posted: {prettyDate(c.timestamp)}</div>                  
-                  <div>{c.voteScore}</div>
-                  <Vote 
-                    postId={c.parentId}
-                    commentId={c.id}
-                  />
-                 <button onClick={() => this.props.deleteComment(c.parentId, c.id)}>Delete Comment</button>                    
-                  <br/>
-              </div>
-            ))}
-        </div>
+<div>
+    <div>{comment.body}</div>
+    <div>Author: {comment.author}</div>
+    <div>Posted: {prettyDate(comment.timestamp)}</div>                  
+    <div>Current Score: {comment.voteScore}</div>
+    <Vote 
+      postId={comment.parentId}
+      commentId={comment.id}
+    />
+    <button onClick={() => this.props.deleteComment(comment.parentId, comment.id)}>
+      Delete Comment
+    </button>                    
+    <br/>
+</div>
       )
     }
   }

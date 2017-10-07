@@ -4,29 +4,41 @@ import { connect } from 'react-redux'
 import Form from 'react-jsonschema-form'
 import uuidv1 from 'uuid/v1'
 
-import { fetchAddComment } from '../actions'
+import { fetchAddPost } from '../actions'
 
-class AddComment extends Component {
+class AddPost extends Component {
     state = {
       formData: {}
     }
 
+    componentDidMount() {
+      this.loadFormData()
+    }
+
+    loadFormData = () => {
+      this.setState({
+        formData: {}
+      })
+    }
+
     loadSchema() {
       return {
-        title: "Add Comment",
+        title: "Add Post",
         type: "object",
-        required: ["body", "author"],
+        required: ["categories", "title", "body", "author"],
         properties: {
-          body: {title: "Body", type: "string", minLength: 2},
-          author: {title: "Author", type: "string", minLength: 2}
+          title: {title: "Title", type: "string", minLength: 1},
+          body: {title: "Body", type: "string", minLength: 1},
+          author: {title: "Author", type: "string", minLength: 1},
+          categories: {title: "Category", type: "string"}
         }
       }
     }
 
     loadUiSchema() {
       return {
-        "ui:order": ["body", "author"],
-        "ui:rootFieldId": "addCommentForm",
+        "ui:order": ["categories", "title", "body", "author"],
+        "ui:rootFieldId": "addPostForm",
         body: {
           "ui:widget": "textarea",
           "ui:placeholder": "Type Comment Here..."
@@ -35,19 +47,18 @@ class AddComment extends Component {
           "ui:placeholder": "User"
         }
       }
-    }
+    }   
 
     onSubmit = ({formData}) => {
-      this.props.submitComment({
+      this.props.submitPost({
         id: uuidv1(),
         timestamp: Date.now(),
+        title: formData.title,
         body: formData.body,
         author: formData.author,
-        parentId: this.props.postId     
+        category: formData.categories   
       })
-      this.setState({
-        formData: {}
-      })
+      this.loadFormData()
     }
  
     render () {
@@ -69,16 +80,18 @@ class AddComment extends Component {
     }
   }
   
-  function mapStateToProps () {
-    return {}
+  function mapStateToProps ({ categories }) {
+    return {
+      categories
+    }
   }
   
   function mapDispatchToProps (dispatch) {
     return {
-      submitComment: (comment) => dispatch(fetchAddComment(comment))      
+      submitPost: (post) => dispatch(fetchAddPost(post))      
     }
   }
   
-  export default connect(mapStateToProps, mapDispatchToProps)(AddComment)
+  export default connect(mapStateToProps, mapDispatchToProps)(AddPost)
   
   

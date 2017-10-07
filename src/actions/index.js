@@ -1,10 +1,11 @@
 import * as API from '../util/api'
 
-export const REQUEST_POSTS = 'REQUEST_POSTS'
-export const RECEIVE_POSTS = 'RECEIVE_POSTS'
-
 export const GET_CATEGORIES = 'GET_CATEGORIES'
 export const SORT_METHOD = 'SORT_METHOD'
+
+export const REQUEST_POSTS = 'REQUEST_POSTS'
+export const RECEIVE_POSTS = 'RECEIVE_POSTS'
+export const ADD_POST = 'ADD_POST'
 
 export const VOTE_UP_POST = 'VOTE_UP_POST'
 export const VOTE_DOWN_POST = 'VOTE_DOWN_POST'
@@ -14,6 +15,29 @@ export const VOTE_DOWN_COMMENT = 'VOTE_DOWN_COMMENT'
 export const ADD_COMMENT = 'ADD_COMMENT'
 export const DELETE_COMMENT = 'DELETE_COMMENT'
 
+// SORT
+export function sortMethod(sorter) {
+  return {
+    type: SORT_METHOD,
+    sorter
+  }
+}
+
+// CATEGORIES
+export function getCategories({ categories }) {
+  return {
+    type: GET_CATEGORIES,
+    categories
+  }
+}
+
+export const fetchCategories = () => dispatch => (
+  API
+    .fetchCategories()
+      .then(res => dispatch(getCategories(res)))
+)
+
+// POSTS
 export function requestPosts(requestingPosts) {
   return {
     type: REQUEST_POSTS,
@@ -48,26 +72,20 @@ export const fetchPostDetail = (postId) => (dispatch, getState) => {
   })
 }
 
-export function getCategories({ categories }) {
+export function addPost(post) {
   return {
-    type: GET_CATEGORIES,
-    categories
+    type: ADD_POST,
+    post
   }
 }
 
-export const fetchCategories = () => dispatch => (
-  API
-    .fetchCategories()
-      .then(res => dispatch(getCategories(res)))
-)
-
-export function sortMethod(sorter) {
-  return {
-    type: SORT_METHOD,
-    sorter
-  }
+export const fetchAddPost = (post) => dispatch => {
+  return API
+    .fetchPostPost(post)
+      .then(res => dispatch(addPost(post)))
 }
 
+// VOTE
 export function voteUpPost(postId) {
   return {
     type: VOTE_UP_POST,
@@ -122,6 +140,7 @@ export const fetchVote = (postId, commentId, vote) => dispatch => {
   }
 }
 
+// COMMENTS
 export function addComment(comment) {
   return {
     type: ADD_COMMENT,

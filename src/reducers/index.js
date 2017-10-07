@@ -1,10 +1,11 @@
 import { combineReducers } from 'redux'
 
 import {
-  REQUEST_POSTS,
-  RECEIVE_POSTS,
   GET_CATEGORIES,
   SORT_METHOD,
+  REQUEST_POSTS,
+  RECEIVE_POSTS,
+  ADD_POST,
   VOTE_UP_POST,
   VOTE_DOWN_POST,
   VOTE_UP_COMMENT,
@@ -25,7 +26,7 @@ function categories (state = [], action) {
 }
 
 function posts (state = [], action) {
-  const { posts = {}, postId, commentId, comment} = action
+  const { posts = {}, post, postId, commentId, comment} = action
   let i, c
   if(postId) {
     i = state.findIndex(post => post.id === postId)
@@ -37,6 +38,14 @@ function posts (state = [], action) {
   switch (action.type) {
     case RECEIVE_POSTS :
       return posts
+    case ADD_POST :
+      return [
+        ...state,
+        {
+          ...post,
+          voteScore: 1
+        }
+      ]
     case VOTE_UP_POST :
       
       return [
@@ -97,7 +106,10 @@ function posts (state = [], action) {
           ...state[i],
           comments: [
             ...state[i].comments,
-            comment
+            {
+              ...comment,
+              voteScore: 1
+            }
           ]
         },
         ...state.slice(i+1)

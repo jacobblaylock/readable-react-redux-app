@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { fetchPostDetail } from '../actions'
 import { prettyDate } from '../util/date'
-import Comment from './Comment'
+import Comments from './Comments'
 import Vote from './Vote'
 import AddComment from './AddComment'
 
@@ -35,7 +35,7 @@ class PostDetail extends Component {
               postId={post.id}
             />          
             {(post.comments && post.comments.length > 0) &&
-              <Comment 
+              <Comments 
                 comments={post.comments}
               />
             } 

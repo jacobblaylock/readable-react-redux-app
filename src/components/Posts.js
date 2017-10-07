@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom'
 import { sortMethod, fetchPosts } from '../actions'
 import Post from './Post'
 import Categories from './Categories'
+import AddPost from './AddPost'
 import { sorter } from '../util/sort'
 
 class Posts extends Component {
@@ -46,6 +47,7 @@ class Posts extends Component {
                   ))}
             </div>
           }
+          <AddPost/>
         </div>
       )
     }

@@ -5,11 +5,13 @@ const headers = {
   }
 } 
 
+// CATEGORIES
 export function fetchCategories () {
   return fetch('http://localhost:5001/categories', headers)
   .then((res) => res.json())
 }
 
+// POSTS
 export function fetchPosts (category) {
   let url = 'http://localhost:5001/' 
   url = category ? `${url}${category}/posts` : `${url}posts`
@@ -45,6 +47,21 @@ export function fetchPostDetail (postId) {
 
 }
 
+export function fetchPostPost (post) {
+  let url = `http://localhost:5001/posts/`
+  let options = {
+    headers: headers.headers,
+    method: 'POST',
+    body: JSON.stringify({
+      ...post
+    })
+  }
+  
+  return fetch(url, options)
+    .then(res => res.json())
+}
+
+// COMMENTS
 export function fetchComments (postId) {
   return fetch(`http://localhost:5001/posts/${postId}/comments`, headers)
   .then((res) => res.json())
