@@ -77,3 +77,28 @@ export function fetchCommentVote (commentId, vote) {
    return fetch(url, options)
     .then(res => res.json())
 }
+
+export function fetchPostComment (comment) {
+  let url = `http://localhost:5001/comments/`
+  let options = {
+    headers: headers.headers,
+    method: 'POST',
+    body: JSON.stringify({
+      ...comment
+    })
+  }
+  
+  return fetch(url, options)
+    .then(res => res.json())
+}
+
+export function fetchDeleteComment (commentId) {
+  let url = `http://localhost:5001/comments/${commentId}`
+  let options = {
+    headers: headers.headers,
+    method: 'DELETE',
+  }
+  
+  return fetch(url, options)
+    .then(res => res.json())
+}

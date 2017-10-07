@@ -1,10 +1,12 @@
 import React, { Component } from 'react'
+import { connect } from 'react-redux'
 
 import Vote from './Vote'
+import { fetchDeleteComment } from '../actions'
 import { prettyDate } from '../util/date'
 
 class Comment extends Component {
-  
+
     render () {
       const { comments } = this.props
   
@@ -20,7 +22,8 @@ class Comment extends Component {
                   <Vote 
                     postId={c.parentId}
                     commentId={c.id}
-                  />                    
+                  />
+                 <button onClick={() => this.props.deleteComment(c.parentId, c.id)}>Delete Comment</button>                    
                   <br/>
               </div>
             ))}
@@ -30,5 +33,15 @@ class Comment extends Component {
   }
   
  
-  export default Comment
+  function mapStateToProps () {
+    return {}
+  }
+  
+  function mapDispatchToProps (dispatch) {
+    return {
+      deleteComment: (postId, commentId) => dispatch(fetchDeleteComment(postId, commentId))      
+    }
+  }
+  
+  export default connect(mapStateToProps, mapDispatchToProps)(Comment)
 

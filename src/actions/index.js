@@ -3,7 +3,6 @@ import * as API from '../util/api'
 export const REQUEST_POSTS = 'REQUEST_POSTS'
 export const RECEIVE_POSTS = 'RECEIVE_POSTS'
 
-export const GET_COMMENTS = 'GET_COMMENTS'
 export const GET_CATEGORIES = 'GET_CATEGORIES'
 export const SORT_METHOD = 'SORT_METHOD'
 
@@ -11,6 +10,9 @@ export const VOTE_UP_POST = 'VOTE_UP_POST'
 export const VOTE_DOWN_POST = 'VOTE_DOWN_POST'
 export const VOTE_UP_COMMENT = 'VOTE_UP_COMMENT'
 export const VOTE_DOWN_COMMENT = 'VOTE_DOWN_COMMENT'
+
+export const ADD_COMMENT = 'ADD_COMMENT'
+export const DELETE_COMMENT = 'DELETE_COMMENT'
 
 export function requestPosts(requestingPosts) {
   return {
@@ -44,13 +46,6 @@ export const fetchPostDetail = (postId) => (dispatch, getState) => {
     dispatch(receivePosts(post))
     dispatch(requestPosts(false))
   })
-}
-
-export function getComments(comments) {
-  return {
-    type: GET_COMMENTS,
-    comments
-  }
 }
 
 export function getCategories({ categories }) {
@@ -125,6 +120,33 @@ export const fetchVote = (postId, commentId, vote) => dispatch => {
         }
       })
   }
+}
+
+export function addComment(comment) {
+  return {
+    type: ADD_COMMENT,
+    comment
+  }
+}
+
+export const fetchAddComment = (comment) => dispatch => {
+  return API
+    .fetchPostComment(comment)
+      .then(res => dispatch(addComment(comment)))
+}
+
+export function deleteComment(postId, commentId) {
+  return {
+    type: DELETE_COMMENT,
+    postId,
+    commentId
+  }
+}
+
+export const fetchDeleteComment = (postId, commentId) => dispatch => {
+  return API
+    .fetchDeleteComment(commentId)
+      .then(res => dispatch(deleteComment(postId, commentId)))
 }
 
 

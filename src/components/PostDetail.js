@@ -4,6 +4,7 @@ import { fetchPostDetail } from '../actions'
 import { prettyDate } from '../util/date'
 import Comment from './Comment'
 import Vote from './Vote'
+import AddComment from './AddComment'
 
 class PostDetail extends Component {
 
@@ -33,11 +34,14 @@ class PostDetail extends Component {
             <Vote 
               postId={post.id}
             />          
-          {post.comments &&
-            <Comment 
-              comments={post.comments}
-            />
-          } 
+            {(post.comments && post.comments.length > 0) &&
+              <Comment 
+                comments={post.comments}
+              />
+            } 
+            <AddComment 
+              postId={post.id}
+            />          
           </div>
         }
       </div>
