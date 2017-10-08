@@ -30,7 +30,11 @@ class AddPost extends Component {
           title: {title: "Title", type: "string", minLength: 1},
           body: {title: "Body", type: "string", minLength: 1},
           author: {title: "Author", type: "string", minLength: 1},
-          categories: {title: "Category", type: "string"}
+          categories: {
+            title: "Category", 
+            type: "string", 
+            enum: this.props.categories.map(cat => cat.name)
+          }
         }
       }
     }
@@ -39,6 +43,10 @@ class AddPost extends Component {
       return {
         "ui:order": ["categories", "title", "body", "author"],
         "ui:rootFieldId": "addPostForm",
+        categories: {
+          "ui:widget": "select",
+          "ui:placeholder": "Select A Category"
+        },
         body: {
           "ui:widget": "textarea",
           "ui:placeholder": "Type Comment Here..."
@@ -62,7 +70,6 @@ class AddPost extends Component {
     }
  
     render () {
-
       return (
         <div>
           <Form 
@@ -72,7 +79,7 @@ class AddPost extends Component {
             onSubmit={this.onSubmit}
           >
             <div>
-              <button type="submit">Submit Comment</button>
+              <button type="submit">Submit Post</button>
             </div>
           </Form>
         </div>
@@ -80,7 +87,7 @@ class AddPost extends Component {
     }
   }
   
-  function mapStateToProps ({ categories }) {
+  function mapStateToProps({ categories }) {
     return {
       categories
     }

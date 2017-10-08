@@ -10,11 +10,10 @@ class Comments extends Component {
         <div>
           <h4>Comments:</h4>
             {comments.map(comment => (
-              <div key={comment.id}>
-                <Comment
-                  comment={comment}
-                />
-              </div>
+              <Comment
+                key={comment.id}
+                comment={comment}
+              />
             ))}
         </div>
       )

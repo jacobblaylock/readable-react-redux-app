@@ -11,20 +11,20 @@ class Comment extends Component {
       const { comment } = this.props
   
       return (
-<div>
-    <div>{comment.body}</div>
-    <div>Author: {comment.author}</div>
-    <div>Posted: {prettyDate(comment.timestamp)}</div>                  
-    <div>Current Score: {comment.voteScore}</div>
-    <Vote 
-      postId={comment.parentId}
-      commentId={comment.id}
-    />
-    <button onClick={() => this.props.deleteComment(comment.parentId, comment.id)}>
-      Delete Comment
-    </button>                    
-    <br/>
-</div>
+        <div>
+          <div>{comment.body}</div>
+          <div>Author: {comment.author}</div>
+          <div>Posted: {prettyDate(comment.timestamp)}</div>                  
+          <div>Current Score: {comment.voteScore}</div>
+          <Vote 
+            postId={comment.parentId}
+            commentId={comment.id}
+          />
+          <button onClick={() => this.props.deleteComment(comment.parentId, comment.id)}>
+            Delete Comment
+          </button>                    
+          <br/>
+        </div>
       )
     }
   }

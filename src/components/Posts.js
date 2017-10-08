@@ -6,6 +6,7 @@ import Post from './Post'
 import Categories from './Categories'
 import AddPost from './AddPost'
 import { sorter } from '../util/sort'
+import uuidv1 from 'uuid/v1'
 
 class Posts extends Component {
 
@@ -39,11 +40,10 @@ class Posts extends Component {
                   })
                   .sort(sort)             
                   .map((p) => (
-                    <div key={p.id}>
-                      <Post 
-                        post={p}
-                      />
-                    </div>
+                    <Post 
+                      key={p.id}
+                      post={p}
+                    />
                   ))}
             </div>
           }
