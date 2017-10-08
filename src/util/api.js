@@ -61,12 +61,6 @@ export function fetchPostPost (post) {
     .then(res => res.json())
 }
 
-// COMMENTS
-export function fetchComments (postId) {
-  return fetch(`http://localhost:5001/posts/${postId}/comments`, headers)
-  .then((res) => res.json())
-}
-
 export function fetchPostVote (postId, vote) {
   let url = `http://localhost:5001/posts/${postId}`
   let options = {
@@ -79,6 +73,23 @@ export function fetchPostVote (postId, vote) {
 
    return fetch(url, options)
     .then(res => res.json())
+}
+
+export function fetchDeletePost (postId) {
+  let url = `http://localhost:5001/posts/${postId}`
+  let options = {
+    headers: headers.headers,
+    method: 'DELETE'
+  }
+  
+  return fetch(url, options)
+    .then(res => res)
+}
+
+// COMMENTS
+export function fetchComments (postId) {
+  return fetch(`http://localhost:5001/posts/${postId}/comments`, headers)
+  .then((res) => res.json())
 }
 
 export function fetchCommentVote (commentId, vote) {
@@ -113,7 +124,7 @@ export function fetchDeleteComment (commentId) {
   let url = `http://localhost:5001/comments/${commentId}`
   let options = {
     headers: headers.headers,
-    method: 'DELETE',
+    method: 'DELETE'
   }
   
   return fetch(url, options)

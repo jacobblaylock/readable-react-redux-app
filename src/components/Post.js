@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { prettyDate } from '../util/date'
 import Vote from './Vote'
+import { fetchDeletePost } from '../actions'
 
 class Post extends Component {
 
@@ -21,10 +22,24 @@ class Post extends Component {
         <Vote 
           postId={post.id}
         />
-        <Link to={'/' + post.category + '/' + post.id}>More Details</Link>        
+        <Link to={'/' + post.category + '/' + post.id}>More Details</Link>
+        <br/>
+        <button onClick={() => this.props.deletePost(post.id)}>
+          Delete Post
+        </button>                   
       </div>
     )
   }
 }
 
-export default connect()(Post)
+function mapStateToProps () {
+  return {}
+}
+
+function mapDispatchToProps (dispatch) {
+  return {
+    deletePost: (postId) => dispatch(fetchDeletePost(postId))      
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Post)

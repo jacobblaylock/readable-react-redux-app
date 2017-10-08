@@ -6,6 +6,7 @@ export const SORT_METHOD = 'SORT_METHOD'
 export const REQUEST_POSTS = 'REQUEST_POSTS'
 export const RECEIVE_POSTS = 'RECEIVE_POSTS'
 export const ADD_POST = 'ADD_POST'
+export const DELETE_POST = 'DELETE_POST'
 
 export const VOTE_UP_POST = 'VOTE_UP_POST'
 export const VOTE_DOWN_POST = 'VOTE_DOWN_POST'
@@ -83,6 +84,19 @@ export const fetchAddPost = (post) => dispatch => {
   return API
     .fetchPostPost(post)
       .then(res => dispatch(addPost(post)))
+}
+
+export function deletePost(postId) {
+  return {
+    type: DELETE_POST,
+    postId
+  }
+}
+
+export const fetchDeletePost = (postId) => dispatch => {
+  return API
+    .fetchDeletePost(postId)
+      .then(res => dispatch(deletePost(postId)))
 }
 
 // VOTE

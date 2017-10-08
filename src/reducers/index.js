@@ -3,13 +3,17 @@ import { combineReducers } from 'redux'
 import {
   GET_CATEGORIES,
   SORT_METHOD,
+
   REQUEST_POSTS,
   RECEIVE_POSTS,
   ADD_POST,
+  DELETE_POST,
+
   VOTE_UP_POST,
   VOTE_DOWN_POST,
   VOTE_UP_COMMENT,
   VOTE_DOWN_COMMENT,
+  
   ADD_COMMENT,
   DELETE_COMMENT
 } from '../actions'
@@ -37,7 +41,7 @@ function posts (state = [], action) {
 
   switch (action.type) {
     case RECEIVE_POSTS :
-      return posts
+      return posts.filter(post => !post.deleted)
     case ADD_POST :
       return [
         ...state,
@@ -45,6 +49,11 @@ function posts (state = [], action) {
           ...post,
           voteScore: 1
         }
+      ]
+    case DELETE_POST :
+      return [
+        ...state.slice(0,i),
+        ...state.slice(i+1)
       ]
     case VOTE_UP_POST :
       
