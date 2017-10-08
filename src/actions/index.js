@@ -1,12 +1,15 @@
 import * as API from '../util/api'
+import { formSchema } from '../util/schema'
 
 export const GET_CATEGORIES = 'GET_CATEGORIES'
 export const SORT_METHOD = 'SORT_METHOD'
+export const LOAD_SCHEMA = 'LOAD_SCHEMA'
 
 export const REQUEST_POSTS = 'REQUEST_POSTS'
 export const RECEIVE_POSTS = 'RECEIVE_POSTS'
 export const ADD_POST = 'ADD_POST'
 export const DELETE_POST = 'DELETE_POST'
+export const UPDATE_POST = 'UPDATE_POST'
 
 export const VOTE_UP_POST = 'VOTE_UP_POST'
 export const VOTE_DOWN_POST = 'VOTE_DOWN_POST'
@@ -24,6 +27,19 @@ export function sortMethod(sorter) {
   }
 }
 
+// SCHEMA
+export function loadSchema(schema) {
+  return{
+    type: LOAD_SCHEMA,
+    schema
+  }
+}
+
+export const fetchSchema = (categories) => dispatch => {
+  const schema = formSchema(categories.categories.map(category => category.name))
+  dispatch(loadSchema(schema))
+}
+
 // CATEGORIES
 export function getCategories({ categories }) {
   return {
@@ -35,7 +51,10 @@ export function getCategories({ categories }) {
 export const fetchCategories = () => dispatch => (
   API
     .fetchCategories()
-      .then(res => dispatch(getCategories(res)))
+      .then(categories => {
+        dispatch(getCategories(categories))
+        dispatch(fetchSchema(categories))
+      })
 )
 
 // POSTS
@@ -97,6 +116,19 @@ export const fetchDeletePost = (postId) => dispatch => {
   return API
     .fetchDeletePost(postId)
       .then(res => dispatch(deletePost(postId)))
+}
+
+export function updatePost(post) {
+  return {
+    type: UPDATE_POST,
+    post
+  }
+}
+
+export const fetchPutPost = (post) => dispatch => {
+  return API
+    .fetchPutPost(post)
+      .then(res => dispatch(updatePost(post)))
 }
 
 // VOTE

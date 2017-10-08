@@ -61,6 +61,20 @@ export function fetchPostPost (post) {
     .then(res => res.json())
 }
 
+export function fetchPutPost (post) {
+  let url = `http://localhost:5001/posts/${post.id}`
+  let options = {
+    headers: headers.headers,
+    method: 'PUT',
+    body: JSON.stringify({
+      ...post
+    })
+  }
+  
+  return fetch(url, options)
+    .then(res => res.json())
+}
+
 export function fetchPostVote (postId, vote) {
   let url = `http://localhost:5001/posts/${postId}`
   let options = {

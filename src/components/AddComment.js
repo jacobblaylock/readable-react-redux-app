@@ -11,31 +11,15 @@ class AddComment extends Component {
       formData: {}
     }
 
-    loadSchema() {
-      return {
-        title: "Add Comment",
-        type: "object",
-        required: ["body", "author"],
-        properties: {
-          body: {title: "Body", type: "string", minLength: 2},
-          author: {title: "Author", type: "string", minLength: 2}
-        }
-      }
+    componentDidMount() {
+      this.loadFormData()
     }
 
-    loadUiSchema() {
-      return {
-        "ui:order": ["body", "author"],
-        "ui:rootFieldId": "addCommentForm",
-        body: {
-          "ui:widget": "textarea",
-          "ui:placeholder": "Type Comment Here..."
-        },
-        author: {
-          "ui:placeholder": "User"
-        }
-      }
-    }
+    loadFormData = () => {
+      this.setState({
+        formData: {}
+      })
+    }    
 
     onSubmit = ({formData}) => {
       this.props.submitComment({
@@ -45,18 +29,17 @@ class AddComment extends Component {
         author: formData.author,
         parentId: this.props.postId     
       })
-      this.setState({
-        formData: {}
-      })
+      this.loadFormData()
     }
  
     render () {
+      const { schema = {} } = this.props
 
       return (
         <div>
           <Form 
-            schema={this.loadSchema()}
-            uiSchema={this.loadUiSchema()}
+            schema={schema.comment ? schema.comment.schema : {}}
+            uiSchema={schema.comment ? schema.comment.ui : {}}
             formData={this.state.formData}
             onSubmit={this.onSubmit}
           >
@@ -69,8 +52,10 @@ class AddComment extends Component {
     }
   }
   
-  function mapStateToProps () {
-    return {}
+  function mapStateToProps ({ schema }) {
+    return {
+      schema
+    }
   }
   
   function mapDispatchToProps (dispatch) {

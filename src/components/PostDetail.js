@@ -4,9 +4,13 @@ import { fetchPostDetail } from '../actions'
 import { prettyDate } from '../util/date'
 import Comments from './Comments'
 import Vote from './Vote'
+import PostEdit from './PostEdit'
 import AddComment from './AddComment'
 
 class PostDetail extends Component {
+  state = {
+    editModalOpen: false
+  }
 
   componentDidMount () {
     !this.props.post && this.props.loadPostDetail(this.props.match.params.postid)
@@ -14,6 +18,12 @@ class PostDetail extends Component {
 
   goBack = () => {
     this.props.history.goBack()
+  }
+
+  toggleModal = () => {
+    this.setState(state => ({
+      editModalOpen: !state.editModalOpen
+    }))
   }
 
   render () {
@@ -34,6 +44,13 @@ class PostDetail extends Component {
             <Vote 
               postId={post.id}
             />          
+            <button onClick={() => this.toggleModal()}>Edit Post</button>
+            {this.state.editModalOpen &&
+              <PostEdit
+                toggleModal={this.toggleModal}
+                post={post}
+              />
+            }
             {(post.comments && post.comments.length > 0) &&
               <Comments 
                 comments={post.comments}

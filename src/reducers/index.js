@@ -3,11 +3,13 @@ import { combineReducers } from 'redux'
 import {
   GET_CATEGORIES,
   SORT_METHOD,
+  LOAD_SCHEMA,
 
   REQUEST_POSTS,
   RECEIVE_POSTS,
   ADD_POST,
   DELETE_POST,
+  UPDATE_POST,
 
   VOTE_UP_POST,
   VOTE_DOWN_POST,
@@ -33,9 +35,11 @@ function posts (state = [], action) {
   const { posts = {}, post, postId, commentId, comment} = action
   let i, c
   if(postId) {
-    i = state.findIndex(post => post.id === postId)
+    i = state.findIndex(p => p.id === postId)
   }else if(comment) {
-    i = state.findIndex(post => post.id === comment.parentId)
+    i = state.findIndex(p => p.id === comment.parentId)
+  }else if(post) {
+    i = state.findIndex(p => p.id === post.id)
   }
   if(i > -1 && commentId) c = state[i].comments.findIndex(comment => comment.id === commentId)
 
@@ -53,6 +57,19 @@ function posts (state = [], action) {
     case DELETE_POST :
       return [
         ...state.slice(0,i),
+        ...state.slice(i+1)
+      ]
+    case UPDATE_POST :
+      return [
+        ...state.slice(0,i),
+        {
+          ...state[i],
+          timestamp: post.timestamp,
+          title: post.title,
+          body: post.body,
+          author: post.author,
+          category: post.category
+        },
         ...state.slice(i+1)
       ]
     case VOTE_UP_POST :
@@ -159,9 +176,20 @@ function sort (state = '', action) {
   }
 }
 
+function schema (state = {post: {schema: {title: {}}, properties:{ categories:{}}}}, action) {
+  const { schema } = action
+  switch (action.type) {
+    case LOAD_SCHEMA :
+      return schema
+    default :
+      return state
+  }
+}
+
 export default combineReducers({
   categories,
   postsRequested,
   posts,
-  sort
+  sort,
+  schema
 })

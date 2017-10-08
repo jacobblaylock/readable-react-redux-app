@@ -21,42 +21,6 @@ class AddPost extends Component {
       })
     }
 
-    loadSchema() {
-      return {
-        title: "Add Post",
-        type: "object",
-        required: ["categories", "title", "body", "author"],
-        properties: {
-          title: {title: "Title", type: "string", minLength: 1},
-          body: {title: "Body", type: "string", minLength: 1},
-          author: {title: "Author", type: "string", minLength: 1},
-          categories: {
-            title: "Category", 
-            type: "string", 
-            enum: this.props.categories.map(cat => cat.name)
-          }
-        }
-      }
-    }
-
-    loadUiSchema() {
-      return {
-        "ui:order": ["categories", "title", "body", "author"],
-        "ui:rootFieldId": "addPostForm",
-        categories: {
-          "ui:widget": "select",
-          "ui:placeholder": "Select A Category"
-        },
-        body: {
-          "ui:widget": "textarea",
-          "ui:placeholder": "Type Comment Here..."
-        },
-        author: {
-          "ui:placeholder": "User"
-        }
-      }
-    }   
-
     onSubmit = ({formData}) => {
       this.props.submitPost({
         id: uuidv1(),
@@ -70,11 +34,13 @@ class AddPost extends Component {
     }
  
     render () {
+      const { schema = {} } = this.props
+
       return (
         <div>
           <Form 
-            schema={this.loadSchema()}
-            uiSchema={this.loadUiSchema()}
+            schema={schema.post ? schema.post.schema : {}}
+            uiSchema={schema.post ? schema.post.ui : {}}
             formData={this.state.formData}
             onSubmit={this.onSubmit}
           >
@@ -87,9 +53,19 @@ class AddPost extends Component {
     }
   }
   
-  function mapStateToProps({ categories }) {
+  function mapStateToProps({ categories, schema }) {
     return {
-      categories
+      categories,
+      schema: {
+        ...schema,
+        post: {
+          ...schema.post,
+          schema: {
+            ...schema.post.schema,
+            title: 'Add Post'
+          }
+        }
+      }
     }
   }
   
