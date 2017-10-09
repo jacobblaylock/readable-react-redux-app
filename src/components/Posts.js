@@ -10,63 +10,72 @@ import { sorter } from '../util/sort'
 class Posts extends Component {
 
   componentDidMount () {
-    this.props.loadPosts(this.props.category ? this.props.category : '')
+    if(this.props.posts.length < 1) {
+      this.props.loadPosts(this.props.category ? this.props.category : '')
+    }
   }  
+
+  componentWillReceiveProps(nextProps) {
+    // if(nextProps.category && this.props.posts.filter(p => p.category === nextProps.category) < 1) {
+    //   this.props.loadPosts(nextProps.category ? nextProps.category : '')
+    // }    
+  }
   
-    render () {
-      const { posts, postsRequested, sort, category, setSortMethod } = this.props
-  
-      return (
-        <div>
-          {postsRequested ? <div>Loading...</div> :  
+  render () {
+    const { posts, postsRequested, sort, category, setSortMethod } = this.props
+
+    return (
+      <div>
+        {postsRequested ? <div>Loading...</div> :  
+          <div>
+            <Categories
+              category={category}
+            />             
+            <h2>{this.props.cat ? `Posts for ${this.props.cat}` : 'Posts:'}</h2>
             <div>
-              <Link to="/">Home</Link>
-              <Categories/>             
-              <h2>{this.props.cat ? `Posts for ${this.props.cat}` : 'Posts:'}</h2>
-              <div>
-                <button onClick={() => setSortMethod(sorter.voteAsc)}>Votes Asc</button>
-                <button onClick={() => setSortMethod(sorter.voteDesc)}>Votes Desc</button>
-                <button onClick={() => setSortMethod(sorter.dateAsc)}>Date Asc</button>
-                <button onClick={() => setSortMethod(sorter.dateDesc)}>Date Desc</button>
-              </div>
-                {posts
-                  .filter(p => {
-                    if(!category || p.category === category) {
-                      return true
-                    } else {
-                      return false
-                    }
-                  })
-                  .sort(sort)             
-                  .map((p) => (
-                    <Post 
-                      key={p.id}
-                      post={p}
-                    />
-                  ))}
+              <button onClick={() => setSortMethod(sorter.voteAsc)}>Votes Asc</button>
+              <button onClick={() => setSortMethod(sorter.voteDesc)}>Votes Desc</button>
+              <button onClick={() => setSortMethod(sorter.dateAsc)}>Date Asc</button>
+              <button onClick={() => setSortMethod(sorter.dateDesc)}>Date Desc</button>
             </div>
-          }
-          <AddPost/>
-        </div>
-      )
-    }
+              {posts
+                .filter(p => {
+                  if(!category || p.category === category) {
+                    return true
+                  } else {
+                    return false
+                  }
+                })
+                .sort(sort)             
+                .map((p) => (
+                  <Post 
+                    key={p.id}
+                    post={p}
+                  />
+                ))}
+          </div>
+        }
+        <AddPost/>
+      </div>
+    )
   }
-  
-  function mapStateToProps({ posts, postsRequested, sort }, ownProps) {
-    return {
-      posts,
-      postsRequested,
-      sort,
-      category: ownProps.match ? ownProps.match.params.category : undefined
-    }
-  }
+}
 
-  function mapDispatchToProps (dispatch) {
-    return {
-      setSortMethod: (data) => dispatch(sortMethod(data)),
-      loadPosts: (category) => dispatch(fetchPosts(category))
-    }
+function mapStateToProps({ posts, postsRequested, sort }, ownProps) {
+  return {
+    posts,
+    postsRequested,
+    sort,
+    category: ownProps.match ? ownProps.match.params.category : undefined
   }
+}
 
-  export default connect(mapStateToProps, mapDispatchToProps)(Posts)
+function mapDispatchToProps (dispatch) {
+  return {
+    setSortMethod: (data) => dispatch(sortMethod(data)),
+    loadPosts: (category) => dispatch(fetchPosts(category))
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Posts)
 
