@@ -90,6 +90,7 @@ export const fetchPostDetail = (postId) => (dispatch, getState) => {
   .then(post => {
     dispatch(receivePosts(post))
     dispatch(requestPosts(false))
+    if(getState().categories.length < 1) dispatch(fetchCategories())
   })
 }
 

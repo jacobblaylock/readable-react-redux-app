@@ -200,7 +200,7 @@ function sort (state = '', action) {
   }
 }
 
-function schema (state = {post: {schema: {title: {}}, properties:{ categories:{}}}}, action) {
+function schema (state = {post: {schema: {title: {},	properties:{ categories:{}}	}, ui: {},}, comments: {schema: {}, ui: {}}}, action) {
   const { schema } = action
   switch (action.type) {
     case LOAD_SCHEMA :
