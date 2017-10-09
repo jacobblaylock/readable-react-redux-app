@@ -8,7 +8,6 @@ import { fetchPutPost } from '../actions'
 class PostEdit extends Component {
 
   onSubmit = ({formData}) => {
-    console.log(formData)
     this.props.updatePost({
       id: this.props.post.id,
       timestamp: Date.now(),

@@ -51,7 +51,8 @@ function posts (state = [], action) {
         ...state,
         {
           ...post,
-          voteScore: 1
+          voteScore: 1,
+          comments: []
         }
       ]
     case DELETE_POST :
