@@ -18,6 +18,7 @@ export const VOTE_DOWN_COMMENT = 'VOTE_DOWN_COMMENT'
 
 export const ADD_COMMENT = 'ADD_COMMENT'
 export const DELETE_COMMENT = 'DELETE_COMMENT'
+export const UPDATE_COMMENT = 'UPDATE_COMMENT'
 
 // SORT
 export function sortMethod(sorter) {
@@ -214,5 +215,16 @@ export const fetchDeleteComment = (postId, commentId) => dispatch => {
       .then(res => dispatch(deleteComment(postId, commentId)))
 }
 
+export function updateComment(comment) {
+  return {
+    type: UPDATE_COMMENT,
+    comment
+  }
+}
 
+export const fetchPutComment = (comment) => dispatch => {
+  return API
+    .fetchPutComment(comment)
+      .then(res => dispatch(updateComment(comment)))
+}
 

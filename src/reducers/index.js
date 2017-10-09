@@ -17,7 +17,8 @@ import {
   VOTE_DOWN_COMMENT,
   
   ADD_COMMENT,
-  DELETE_COMMENT
+  DELETE_COMMENT,
+  UPDATE_COMMENT
 } from '../actions'
 
 function categories (state = [], action) {
@@ -34,14 +35,6 @@ function categories (state = [], action) {
 function posts (state = [], action) {
   const { posts = {}, post, postId, commentId, comment} = action
   let i, c
-  if(postId) {
-    i = state.findIndex(p => p.id === postId)
-  }else if(comment) {
-    i = state.findIndex(p => p.id === comment.parentId)
-  }else if(post) {
-    i = state.findIndex(p => p.id === post.id)
-  }
-  if(i > -1 && commentId) c = state[i].comments.findIndex(comment => comment.id === commentId)
 
   switch (action.type) {
     case RECEIVE_POSTS :
@@ -56,11 +49,13 @@ function posts (state = [], action) {
         }
       ]
     case DELETE_POST :
+      i = state.findIndex(p => p.id === postId)
       return [
         ...state.slice(0,i),
         ...state.slice(i+1)
       ]
     case UPDATE_POST :
+      i = state.findIndex(p => p.id === post.id)
       return [
         ...state.slice(0,i),
         {
@@ -74,7 +69,7 @@ function posts (state = [], action) {
         ...state.slice(i+1)
       ]
     case VOTE_UP_POST :
-      
+      i = state.findIndex(p => p.id === postId)
       return [
         ...state.slice(0,i),
         {
@@ -84,6 +79,7 @@ function posts (state = [], action) {
         ...state.slice(i + 1)
       ]
     case VOTE_DOWN_POST :
+      i = state.findIndex(p => p.id === postId)
       return [
         ...state.slice(0,i),
         {
@@ -93,6 +89,8 @@ function posts (state = [], action) {
         ...state.slice(i + 1)
       ]
     case VOTE_UP_COMMENT :
+      i = state.findIndex(p => p.id === postId)
+      c = state[i].comments.findIndex(comment => comment.id === commentId)
       return [
         ...state.slice(0,i),
         {
@@ -110,6 +108,8 @@ function posts (state = [], action) {
         ...state.slice(i + 1)
       ]
     case VOTE_DOWN_COMMENT :
+      i = state.findIndex(p => p.id === postId)
+      c = state[i].comments.findIndex(comment => comment.id === commentId)
       return [
         ...state.slice(0,i),
         {
@@ -127,7 +127,8 @@ function posts (state = [], action) {
         ...state.slice(i + 1)
       ]  
     case ADD_COMMENT :
-      return[
+      i = state.findIndex(p => p.id === comment.parentId)
+      return [
         ...state.slice(0,i),
         {
           ...state[i],
@@ -142,6 +143,7 @@ function posts (state = [], action) {
         ...state.slice(i+1)
       ]
     case DELETE_COMMENT :
+      i = state.findIndex(p => p.id === postId)
       return [
        ...state.slice(0,i),
        {
@@ -149,6 +151,27 @@ function posts (state = [], action) {
          comments: state[i].comments.filter(comment => comment.id !== commentId)
        },
        state.slice(i+1)
+      ]
+    case UPDATE_COMMENT :
+      i = state.findIndex(p => p.id === comment.parentId)
+      c = state[i].comments.findIndex(com => com.id === comment.id)
+      return [
+        ...state.slice(0,i),
+        {
+          ...state[i],
+          comments: [
+            ...state[i].comments.slice(0,c),
+            {
+              ...state[i].comments[c],
+              body: comment.body,
+              author: comment.author,
+              timestamp: comment.timestamp
+
+            },
+            ...state[i].comments.slice(c + 1)                
+          ]
+        },
+        ...state.slice(i + 1)
       ]
     default :
       return state

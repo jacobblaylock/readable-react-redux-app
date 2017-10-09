@@ -144,3 +144,17 @@ export function fetchDeleteComment (commentId) {
   return fetch(url, options)
     .then(res => res.json())
 }
+
+export function fetchPutComment (comment) {
+  let url = `http://localhost:5001/comments/${comment.id}`
+  let options = {
+    headers: headers.headers,
+    method: 'PUT',
+    body: JSON.stringify({
+      ...comment
+    })
+  }
+  
+  return fetch(url, options)
+    .then(res => res.json())
+}
