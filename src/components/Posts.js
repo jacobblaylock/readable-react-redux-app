@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { Link } from 'react-router-dom'
 import { sortMethod, fetchPosts } from '../actions'
 import Post from './Post'
 import Categories from './Categories'

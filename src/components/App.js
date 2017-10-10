@@ -1,7 +1,5 @@
 import React, { Component } from 'react'
 import { Route, withRouter } from 'react-router-dom'
-import { Nav, NavItem, Navbar, NavDropdown, MenuItem } from 'react-bootstrap'
-import { LinkContainer } from 'react-router-bootstrap'
 import Posts from './Posts'
 import PostDetail from './PostDetail'
 
