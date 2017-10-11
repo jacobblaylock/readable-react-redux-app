@@ -27,18 +27,18 @@ class Post extends Component {
           </Row>
           <Row>
             <Col md={12}>
-              Author: {post.author} - <small><i>{prettyDate(post.timestamp)}</i></small>
+              <div>{post.author}  <small><i>{prettyDate(post.timestamp)}</i></small></div>
             </Col>
           </Row>
-          <div>Comments: {post.comments ? post.comments.length : 0}</div>        
-          <div>Votes: <Badge>{post.voteScore}</Badge>
+          <div>Votes: <Badge>{post.voteScore}</Badge><span> </span> 
             <Vote 
               postId={post.id}
             />
           </div>
+          <div>Comments: {post.comments ? post.comments.length : 0}</div>          
           <ButtonToolbar>
             <LinkContainer to={'/' + post.category + '/' + post.id}>
-              <Button bsStyle="info">See Details</Button>
+              <Button bsStyle="info">See Comments</Button>
             </LinkContainer>
             <Button bsStyle="danger" onClick={() => this.props.deletePost(post.id)}>
               Delete Post

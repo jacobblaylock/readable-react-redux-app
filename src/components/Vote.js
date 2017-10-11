@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
+import { Button, ButtonGroup } from 'react-bootstrap'
 import { fetchVote } from '../actions'
 
 class Vote extends Component {
@@ -9,9 +10,15 @@ class Vote extends Component {
     const { postId, commentId } = this.props
 
     return (
-      <div>
-        <button onClick={() => this.props.processVote(postId, commentId, 'upVote')}>+</button>
-        <button onClick={() => this.props.processVote(postId, commentId, 'downVote')}>-</button>
+      <div style={{display: "inline"}}>
+        <ButtonGroup bsSize="xsmall">
+          <Button onClick={() => this.props.processVote(postId, commentId, 'upVote')} aria-label="Vote Up">
+            <span className="glyphicon glyphicon-thumbs-up"></span>
+          </Button>
+          <Button onClick={() => this.props.processVote(postId, commentId, 'downVote')} aria-label="Vote Down">
+            <span className="glyphicon glyphicon-thumbs-down"></span>
+          </Button>
+        </ButtonGroup>
       </div>
     )
   }
