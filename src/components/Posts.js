@@ -5,6 +5,7 @@ import { Button, ButtonToolbar, ToggleButtonGroup, ToggleButton, Grid } from 're
 import { sortMethod, fetchPosts, fetchDeletePost } from '../actions'
 import Post from './Post'
 import Categories from './Categories'
+import Sorter from './Sorter'
 import AddPost from './AddPost'
 import { sorter } from '../util/sort'
 
@@ -42,15 +43,7 @@ class Posts extends Component {
               category={category}
             />             
             <h2>{category ? `Posts for ${category.charAt(0).toUpperCase() + category.slice(1)}` : 'All Posts'}</h2>
-            <div>Sort By:</div>
-            <ButtonToolbar>
-              <ToggleButtonGroup type="radio" name="sorter">
-                <ToggleButton value={1} onClick={() => setSortMethod(sorter.voteAsc)}>Votes Asc</ToggleButton>
-                <ToggleButton value={2} onClick={() => setSortMethod(sorter.voteDesc)}>Votes Desc</ToggleButton>
-                <ToggleButton value={3} onClick={() => setSortMethod(sorter.dateAsc)}>Date Asc</ToggleButton>
-                <ToggleButton value={4} onClick={() => setSortMethod(sorter.dateDesc)}>Date Desc</ToggleButton>
-              </ToggleButtonGroup>
-            </ButtonToolbar>
+            <Sorter/>
             <Grid fluid={true}>            
               {posts
                 .filter(p => {
@@ -105,7 +98,6 @@ function mapStateToProps({ posts, postsRequested, sort }, ownProps) {
 
 function mapDispatchToProps (dispatch) {
   return {
-    setSortMethod: (data) => dispatch(sortMethod(data)),
     loadPosts: (category) => dispatch(fetchPosts(category)),
     deletePost: (postId) => dispatch(fetchDeletePost(postId)) 
   }

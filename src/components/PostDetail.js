@@ -42,11 +42,13 @@ class PostDetail extends Component {
         {post &&
           <div> 
             <Grid fluid={true}>
-              <Button bsStyle="primary" onClick={() => this.toggleEditModal()}>Edit Post</Button>
               <Post
                 post={post}
                 isDetail={true}
               />
+ 
+              <Button bsStyle="primary" onClick={() => this.toggleEditModal()}>Edit Post</Button>              
+              <br/><br/>
               {(post.comments && post.comments.length > 0) &&
                 <Comments 
                   comments={post.comments}
