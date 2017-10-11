@@ -34,7 +34,7 @@ class Posts extends Component {
   
   render () {
     const { posts, postsRequested, sort, category, setSortMethod } = this.props
-    
+
 
     return (
       <div>
@@ -42,9 +42,11 @@ class Posts extends Component {
           <div>
             <Categories
               category={category}
-            />             
-            <h2>{category ? `Posts for ${category.charAt(0).toUpperCase() + category.slice(1)}` : 'All Posts'}</h2>
-            <Sorter/>
+            />        
+            <Grid fluid={true}>
+              <h2>{category ? `Posts for ${category.charAt(0).toUpperCase() + category.slice(1)}` : 'All Posts'}</h2>
+              <Sorter/>
+            </Grid>     
             <Grid fluid={true}>            
               {posts
                 .filter(p => {

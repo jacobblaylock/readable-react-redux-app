@@ -42,10 +42,10 @@ class PostDetail extends Component {
         <Categories
           category={category}
         />              
-        <button onClick={this.goBack}>Back</button>
         {post &&
           <div> 
             <Grid fluid={true}>
+              <Button onClick={this.goBack}>Back</Button>
               <Post
                 post={post}
                 isDetail={true}

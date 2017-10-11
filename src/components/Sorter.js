@@ -18,6 +18,8 @@ class Sorter extends Component {
             <ToggleButton value={2} onClick={() => setSortMethod(sorter.voteDesc)}>Votes <span className="glyphicon glyphicon-chevron-down" aria-label="descending"></span></ToggleButton>
             <ToggleButton value={3} onClick={() => setSortMethod(sorter.dateAsc)}>Date <span className="glyphicon glyphicon-chevron-up" aria-label="ascending"></span></ToggleButton>
             <ToggleButton value={4} onClick={() => setSortMethod(sorter.dateDesc)}>Date <span className="glyphicon glyphicon-chevron-down" aria-label="descending"></span></ToggleButton>
+            <ToggleButton value={5} onClick={() => setSortMethod(sorter.commentAsc)}>Comments <span className="glyphicon glyphicon-chevron-up" aria-label="ascending"></span></ToggleButton>
+            <ToggleButton value={6} onClick={() => setSortMethod(sorter.commentDesc)}>Comments <span className="glyphicon glyphicon-chevron-down" aria-label="descending"></span></ToggleButton>            
           </ToggleButtonGroup>
           </ButtonToolbar>
       </div>
