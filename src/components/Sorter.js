@@ -14,10 +14,10 @@ class Sorter extends Component {
         <div>Sort By:</div>
         <ButtonToolbar>
           <ToggleButtonGroup type="radio" name="sorter">
-            <ToggleButton value={1} onClick={() => setSortMethod(sorter.voteAsc)}>Votes Asc</ToggleButton>
-            <ToggleButton value={2} onClick={() => setSortMethod(sorter.voteDesc)}>Votes Desc</ToggleButton>
-            <ToggleButton value={3} onClick={() => setSortMethod(sorter.dateAsc)}>Date Asc</ToggleButton>
-            <ToggleButton value={4} onClick={() => setSortMethod(sorter.dateDesc)}>Date Desc</ToggleButton>
+            <ToggleButton value={1} onClick={() => setSortMethod(sorter.voteAsc)}>Votes <span className="glyphicon glyphicon-chevron-up" aria-label="ascending"></span></ToggleButton>
+            <ToggleButton value={2} onClick={() => setSortMethod(sorter.voteDesc)}>Votes <span className="glyphicon glyphicon-chevron-down" aria-label="descending"></span></ToggleButton>
+            <ToggleButton value={3} onClick={() => setSortMethod(sorter.dateAsc)}>Date <span className="glyphicon glyphicon-chevron-up" aria-label="ascending"></span></ToggleButton>
+            <ToggleButton value={4} onClick={() => setSortMethod(sorter.dateDesc)}>Date <span className="glyphicon glyphicon-chevron-down" aria-label="descending"></span></ToggleButton>
           </ToggleButtonGroup>
           </ButtonToolbar>
       </div>
