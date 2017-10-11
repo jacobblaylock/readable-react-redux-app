@@ -6,11 +6,12 @@ import Post from './Post'
 import Comments from './Comments'
 import PostEdit from './PostEdit'
 import AddComment from './AddComment'
+import Categories from './Categories'
 
 class PostDetail extends Component {
   state = {
     editModalOpen: false,
-    addModalOpen: false
+    addModalOpen: false,
   }
 
   componentDidMount () {
@@ -34,10 +35,13 @@ class PostDetail extends Component {
   }  
 
   render () {
-    const { post } = this.props
+    const { post, category } = this.props
 
     return (
       <div>
+        <Categories
+          category={category}
+        />              
         <button onClick={this.goBack}>Back</button>
         {post &&
           <div> 
@@ -79,7 +83,8 @@ class PostDetail extends Component {
 
 function mapStateToProps({ posts }, ownProps) {
   return {
-    post: posts.find(p => p.id === ownProps.match.params.postid)
+    post: posts.find(p => p.id === ownProps.match.params.postid),
+    category: ownProps.match ? ownProps.match.params.category : undefined
   }
 }
 

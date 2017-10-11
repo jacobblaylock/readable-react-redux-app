@@ -34,6 +34,7 @@ class Posts extends Component {
   
   render () {
     const { posts, postsRequested, sort, category, setSortMethod } = this.props
+    
 
     return (
       <div>
@@ -80,6 +81,7 @@ class Posts extends Component {
         {this.state.addModalOpen &&
           <AddPost
             toggleModal={this.toggleModal}
+            category={category}
           />
         }
       </div>

@@ -9,11 +9,9 @@ import { fetchAddPost } from '../actions'
 
 class AddPost extends Component {
     state = {
-      formData: {}
-    }
-
-    componentDidMount() {
-      this.loadFormData()
+      formData: {
+        categories: this.props.category
+      }
     }
 
     loadFormData = () => {
