@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { fetchPostDetail } from '../actions'
-import { Grid, Button } from 'react-bootstrap'
+import { fetchPostDetail, fetchDeletePost } from '../actions'
+import { Grid, Button, ButtonToolbar } from 'react-bootstrap'
 import Post from './Post'
 import Comments from './Comments'
 import PostEdit from './PostEdit'
@@ -34,6 +34,11 @@ class PostDetail extends Component {
     }))
   }  
 
+  removePost = (postId) => {
+    this.props.deletePost(postId)
+    this.goBack()
+  }
+
   render () {
     const { post, category } = this.props
 
@@ -50,8 +55,12 @@ class PostDetail extends Component {
                 post={post}
                 isDetail={true}
               />
- 
-              <Button bsStyle="primary" onClick={() => this.toggleEditModal()}>Edit Post</Button>              
+              <ButtonToolbar>
+                <Button bsStyle="primary" onClick={() => this.toggleEditModal()}>Edit Post</Button>              
+                <Button bsStyle="danger" onClick={() => this.removePost(post.id)}>
+                  Delete Post
+                </Button>      
+              </ButtonToolbar>        
               <br/><br/>
               {(post.comments && post.comments.length > 0) &&
                 <Comments 
@@ -90,7 +99,8 @@ function mapStateToProps({ posts }, ownProps) {
 
 function mapDispatchToProps (dispatch) {
   return {
-    loadPostDetail: (postId) => dispatch(fetchPostDetail(postId))
+    loadPostDetail: (postId) => dispatch(fetchPostDetail(postId)),
+    deletePost: (postId) => dispatch(fetchDeletePost(postId)) 
   }
 }
 
