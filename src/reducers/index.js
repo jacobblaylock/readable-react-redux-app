@@ -150,7 +150,7 @@ function posts (state = [], action) {
          ...state[i],
          comments: state[i].comments.filter(comment => comment.id !== commentId)
        },
-       state.slice(i+1)
+       ...state.slice(i+1)
       ]
     case UPDATE_COMMENT :
       i = state.findIndex(p => p.id === comment.parentId)
