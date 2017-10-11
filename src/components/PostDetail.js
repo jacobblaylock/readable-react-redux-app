@@ -9,7 +9,8 @@ import AddComment from './AddComment'
 
 class PostDetail extends Component {
   state = {
-    editModalOpen: false
+    editModalOpen: false,
+    addModalOpen: false
   }
 
   componentDidMount () {
@@ -20,11 +21,17 @@ class PostDetail extends Component {
     this.props.history.goBack()
   }
 
-  toggleModal = () => {
+  toggleEditModal = () => {
     this.setState(state => ({
       editModalOpen: !state.editModalOpen
     }))
   }
+
+  toggleAddModal = () => {
+    this.setState(state => ({
+      addModalOpen: !state.addModalOpen
+    }))
+  }  
 
   render () {
     const { post } = this.props
@@ -35,7 +42,7 @@ class PostDetail extends Component {
         {post &&
           <div> 
             <Grid fluid={true}>
-              <Button bsStyle="primary" onClick={() => this.toggleModal()}>Edit Post</Button>
+              <Button bsStyle="primary" onClick={() => this.toggleEditModal()}>Edit Post</Button>
               <Post
                 post={post}
                 isDetail={true}
@@ -45,19 +52,24 @@ class PostDetail extends Component {
                   comments={post.comments}
                 />
               } 
-              <AddComment 
-                postId={post.id}
-              />
             </Grid>          
           </div>
         }
 
         {this.state.editModalOpen &&
           <PostEdit
-            toggleModal={this.toggleModal}
+            toggleModal={this.toggleEditModal}
             post={post}
           />
-        }        
+        }
+
+        <Button bsStyle="success" bsSize="large" className="add-button" onClick={() => this.toggleAddModal()}>Add Comment</Button>                
+        {this.state.addModalOpen &&
+          <AddComment 
+            toggleModal={this.toggleAddModal}
+            postId={post.id}
+          />        
+        }
       </div>
     )
   }

@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-
 import Form from 'react-jsonschema-form'
+import { Modal, Button, ButtonToolbar } from 'react-bootstrap'
 import uuidv1 from 'uuid/v1'
 
 import { fetchAddComment } from '../actions'
@@ -30,6 +30,7 @@ class AddComment extends Component {
         parentId: this.props.postId     
       })
       this.loadFormData()
+      this.props.toggleModal()      
     }
  
     render () {
@@ -37,16 +38,24 @@ class AddComment extends Component {
 
       return (
         <div>
-          <Form 
-            schema={schema.comment ? schema.comment.schema : {}}
-            uiSchema={schema.comment ? schema.comment.ui : {}}
-            formData={this.state.formData}
-            onSubmit={this.onSubmit}
-          >
-            <div>
-              <button type="submit">Submit Comment</button>
-            </div>
-          </Form>
+          <Modal.Dialog>
+            <Modal.Body>
+              <Form 
+                schema={schema.comment ? schema.comment.schema : {}}
+                uiSchema={schema.comment ? schema.comment.ui : {}}
+                formData={this.state.formData}
+                onSubmit={this.onSubmit}
+              >
+                <div>
+                  <ButtonToolbar>
+                    <Button onClick={() => this.props.toggleModal()}>Cancel</Button>
+                    <Button type="submit" bsStyle="primary">Save changes</Button>
+                  </ButtonToolbar>
+                </div>
+              </Form>
+            </Modal.Body>
+
+          </Modal.Dialog>
         </div>
       )
     }

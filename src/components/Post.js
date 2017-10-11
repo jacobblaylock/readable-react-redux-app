@@ -1,9 +1,7 @@
 import React, { Component } from 'react'
-import { connect } from 'react-redux'
 import { Label, Badge } from 'react-bootstrap'
 import { prettyDate } from '../util/date'
 import Vote from './Vote'
-import { fetchDeletePost } from '../actions'
 
 class Post extends Component {
 
@@ -13,10 +11,10 @@ class Post extends Component {
     return (
       <div>
         <h3>{post.title}</h3>
-        <p><Label>{post.category.charAt(0).toUpperCase() + post.category.slice(1)}</Label></p>
         <p className="post-body">{post.body}</p>
         <div className="details">
-          <div>{post.author} - <small><i>{prettyDate(post.timestamp)}</i></small></div>
+          <p>{post.author} - <small><i>{prettyDate(post.timestamp)}</i></small></p>
+          <Label>{post.category.charAt(0).toUpperCase() + post.category.slice(1)}</Label>
           <div>Votes: <Badge>{post.voteScore}</Badge><span> </span> 
             <Vote 
               postId={post.id}
@@ -29,14 +27,4 @@ class Post extends Component {
   }
 }
 
-function mapStateToProps () {
-  return {}
-}
-
-function mapDispatchToProps (dispatch) {
-  return {
-    deletePost: (postId) => dispatch(fetchDeletePost(postId))      
-  }
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(Post)
+export default Post

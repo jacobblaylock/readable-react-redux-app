@@ -2,13 +2,16 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { LinkContainer } from 'react-router-bootstrap'
 import { Button, ButtonToolbar, ToggleButtonGroup, ToggleButton, Grid } from 'react-bootstrap'
-import { sortMethod, fetchPosts } from '../actions'
+import { sortMethod, fetchPosts, fetchDeletePost } from '../actions'
 import Post from './Post'
 import Categories from './Categories'
 import AddPost from './AddPost'
 import { sorter } from '../util/sort'
 
 class Posts extends Component {
+  state = {
+    addModalOpen: false
+  }
 
   componentDidMount () {
     if(this.props.posts.length < 1) {
@@ -21,6 +24,12 @@ class Posts extends Component {
     //   this.props.loadPosts(nextProps.category ? nextProps.category : '')
     // }    
   }
+
+  toggleModal = () => {
+    this.setState(state => ({
+      addModalOpen: !state.addModalOpen
+    }))
+  }  
   
   render () {
     const { posts, postsRequested, sort, category, setSortMethod } = this.props
@@ -73,7 +82,13 @@ class Posts extends Component {
             </Grid>
           </div>
         }
-        <AddPost/>
+        
+        <Button bsStyle="success" bsSize="large" className="add-button" onClick={() => this.toggleModal()}>Add Post</Button>
+        {this.state.addModalOpen &&
+          <AddPost
+            toggleModal={this.toggleModal}
+          />
+        }
       </div>
     )
   }
@@ -91,7 +106,8 @@ function mapStateToProps({ posts, postsRequested, sort }, ownProps) {
 function mapDispatchToProps (dispatch) {
   return {
     setSortMethod: (data) => dispatch(sortMethod(data)),
-    loadPosts: (category) => dispatch(fetchPosts(category))
+    loadPosts: (category) => dispatch(fetchPosts(category)),
+    deletePost: (postId) => dispatch(fetchDeletePost(postId)) 
   }
 }
 

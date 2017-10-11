@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
+import { Modal, Button, ButtonToolbar } from 'react-bootstrap'
 
 import Form from 'react-jsonschema-form'
 import uuidv1 from 'uuid/v1'
@@ -31,6 +32,7 @@ class AddPost extends Component {
         category: formData.categories   
       })
       this.loadFormData()
+      this.props.toggleModal()
     }
  
     render () {
@@ -38,16 +40,24 @@ class AddPost extends Component {
 
       return (
         <div>
-          <Form 
-            schema={schema.post ? schema.post.schema : {}}
-            uiSchema={schema.post ? schema.post.ui : {}}
-            formData={this.state.formData}
-            onSubmit={this.onSubmit}
-          >
-            <div>
-              <button type="submit">Submit Post</button>
-            </div>
-          </Form>
+          <Modal.Dialog>
+            <Modal.Body>
+              <Form 
+                schema={schema.post ? schema.post.schema : {}}
+                uiSchema={schema.post ? schema.post.ui : {}}
+                formData={this.state.formData}
+                onSubmit={this.onSubmit}
+              >
+                <div>
+                  <ButtonToolbar>
+                    <Button onClick={() => this.props.toggleModal()}>Cancel</Button>
+                    <Button type="submit" bsStyle="primary">Save changes</Button>
+                  </ButtonToolbar>
+                </div>
+              </Form>
+            </Modal.Body>
+
+          </Modal.Dialog>
         </div>
       )
     }
