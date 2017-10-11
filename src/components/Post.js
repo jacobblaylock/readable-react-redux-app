@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
-import { Link } from 'react-router-dom'
+import { LinkContainer } from 'react-router-bootstrap'
 import { connect } from 'react-redux'
+import { Grid, Row, Col, Label, Button, ButtonToolbar, Badge } from 'react-bootstrap'
 import { prettyDate } from '../util/date'
 import Vote from './Vote'
 import { fetchDeletePost } from '../actions'
@@ -12,21 +13,39 @@ class Post extends Component {
 
     return (
       <div>
-        <h3>{post.title}</h3>
-        <div><p>{post.body}</p></div>
-        <div>Category: {post.category}</div>
-        <div>Author: {post.author}</div>
-        <div>Posted: {prettyDate(post.timestamp)}</div>
-        <div>Comments: {post.comments ? post.comments.length : 0}</div>        
-        <div>Current Score: {post.voteScore}</div>
-        <Vote 
-          postId={post.id}
-        />
-        <Link to={'/' + post.category + '/' + post.id}>More Details</Link>
-        <br/>
-        <button onClick={() => this.props.deletePost(post.id)}>
-          Delete Post
-        </button>                   
+        <Grid fluid={true}>
+          <Row>
+            <Col md={10}>
+              <h3>{post.title}</h3>
+              <p><Label>{post.category.charAt(0).toUpperCase() + post.category.slice(1)}</Label></p>
+            </Col>
+          </Row>
+          <Row>
+            <Col md={12}>
+              <p className="lead">{post.body}</p>
+            </Col>            
+          </Row>
+          <Row>
+            <Col md={12}>
+              Author: {post.author} - <small><i>{prettyDate(post.timestamp)}</i></small>
+            </Col>
+          </Row>
+          <div>Comments: {post.comments ? post.comments.length : 0}</div>        
+          <div>Votes: <Badge>{post.voteScore}</Badge>
+            <Vote 
+              postId={post.id}
+            />
+          </div>
+          <ButtonToolbar>
+            <LinkContainer to={'/' + post.category + '/' + post.id}>
+              <Button bsStyle="info">See Details</Button>
+            </LinkContainer>
+            <Button bsStyle="danger" onClick={() => this.props.deletePost(post.id)}>
+              Delete Post
+            </Button>
+          </ButtonToolbar>
+          <hr/>          
+        </Grid>                   
       </div>
     )
   }

@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
+import { ButtonToolbar, ToggleButtonGroup, ToggleButton } from 'react-bootstrap'
 import { sortMethod, fetchPosts } from '../actions'
 import Post from './Post'
 import Categories from './Categories'
@@ -30,13 +31,18 @@ class Posts extends Component {
             <Categories
               category={category}
             />             
-            <h2>{this.props.cat ? `Posts for ${this.props.cat}` : 'Posts:'}</h2>
-            <div>
-              <button onClick={() => setSortMethod(sorter.voteAsc)}>Votes Asc</button>
-              <button onClick={() => setSortMethod(sorter.voteDesc)}>Votes Desc</button>
-              <button onClick={() => setSortMethod(sorter.dateAsc)}>Date Asc</button>
-              <button onClick={() => setSortMethod(sorter.dateDesc)}>Date Desc</button>
-            </div>
+            <h2>{category ? `Posts for ${category.charAt(0).toUpperCase() + category.slice(1)}` : 'All Posts'}</h2>
+            <div>Sort By:</div>
+            <ButtonToolbar>
+              <ToggleButtonGroup type="radio" name="sorter">
+                <ToggleButton value={1} onClick={() => setSortMethod(sorter.voteAsc)}>Votes Asc</ToggleButton>
+                <ToggleButton value={2} onClick={() => setSortMethod(sorter.voteDesc)}>Votes Desc</ToggleButton>
+                <ToggleButton value={3} onClick={() => setSortMethod(sorter.dateAsc)}>Date Asc</ToggleButton>
+                <ToggleButton value={4} onClick={() => setSortMethod(sorter.dateDesc)}>Date Desc</ToggleButton>
+              </ToggleButtonGroup>
+            </ButtonToolbar>
+
+            
               {posts
                 .filter(p => {
                   if(!category || p.category === category) {

@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
-import { Link } from 'react-router-dom'
-import { Nav, NavItem, Navbar, Button } from 'react-bootstrap'
+import { Nav, NavItem, Navbar } from 'react-bootstrap'
 import { LinkContainer } from 'react-router-bootstrap'
 import { connect } from 'react-redux'
 import { fetchCategories } from '../actions'
@@ -16,10 +15,6 @@ class Categories extends Component {
     }    
   }
 
-  handleSelect = (eventKey) => {
-    this.setState({ activeKey: eventKey })
-  }
-
   render () {
     const { categories, category = '' } = this.props
 
@@ -27,11 +22,12 @@ class Categories extends Component {
       <div>
         <Navbar fluid={true}>
           <Navbar.Header>
-            <Navbar.Text>CATEGORY:</Navbar.Text>
+            <Navbar.Brand>Jacob's Readable App</Navbar.Brand>
           </Navbar.Header>
-          <Nav bsStyle="pills" activeKey={category} onSelect={this.handleSelect}>
-            <LinkContainer key="home" exact={true} to="/">
-              <NavItem eventKey={'home'}>Home</NavItem>
+          <Navbar.Text>CATEGORY:</Navbar.Text>
+          <Nav bsStyle="pills" activeKey={category}>
+            <LinkContainer key="all" exact={true} to="/">
+              <NavItem eventKey={''}>All</NavItem>
             </LinkContainer>  
              {categories.map((c) => (
               <LinkContainer key={c.name} to={'/' + c.path}>

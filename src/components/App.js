@@ -8,7 +8,6 @@ class App extends Component {
   render () {
     return (
       <div>
-        <h1>Jacob's Readable App</h1>
           <Route exact path={'/'} component={Posts}/>
           <Route exact path={'/:category'} component={Posts}/>
           <Route path={'/:category/:postid'} component={PostDetail}/>          
