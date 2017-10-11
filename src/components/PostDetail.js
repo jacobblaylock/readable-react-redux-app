@@ -1,9 +1,9 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { fetchPostDetail } from '../actions'
-import { prettyDate } from '../util/date'
+import { Grid, Button } from 'react-bootstrap'
+import Post from './Post'
 import Comments from './Comments'
-import Vote from './Vote'
 import PostEdit from './PostEdit'
 import AddComment from './AddComment'
 
@@ -34,33 +34,30 @@ class PostDetail extends Component {
         <button onClick={this.goBack}>Back</button>
         {post &&
           <div> 
-            <h3>{post.title}</h3>
-            <div><p>{post.body}</p></div>
-            <div>Category: {post.category}</div>
-            <div>Author: {post.author}</div>
-            <div>Posted: {prettyDate(post.timestamp)}</div>
-            <div>Comments: {post.comments ? post.comments.length : 0}</div>        
-            <div>Current Score: {post.voteScore}</div>
-            <Vote 
-              postId={post.id}
-            />          
-            <button onClick={() => this.toggleModal()}>Edit Post</button>
-            {this.state.editModalOpen &&
-              <PostEdit
-                toggleModal={this.toggleModal}
+            <Grid fluid={true}>
+              <Button bsStyle="primary" onClick={() => this.toggleModal()}>Edit Post</Button>
+              <Post
                 post={post}
+                isDetail={true}
               />
-            }
-            {(post.comments && post.comments.length > 0) &&
-              <Comments 
-                comments={post.comments}
+              {(post.comments && post.comments.length > 0) &&
+                <Comments 
+                  comments={post.comments}
+                />
+              } 
+              <AddComment 
+                postId={post.id}
               />
-            } 
-            <AddComment 
-              postId={post.id}
-            />          
+            </Grid>          
           </div>
         }
+
+        {this.state.editModalOpen &&
+          <PostEdit
+            toggleModal={this.toggleModal}
+            post={post}
+          />
+        }        
       </div>
     )
   }

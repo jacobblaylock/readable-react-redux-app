@@ -3,3 +3,15 @@ body {
   padding: 0;
   font-family: sans-serif;
 }
+
+.comment-body {
+  font-size: 16px
+}
+
+.post-body {
+  font-size: 18px
+}
+
+.details {
+  color: gray
+}

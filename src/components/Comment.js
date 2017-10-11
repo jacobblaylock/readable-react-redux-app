@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
+import { Button, ButtonToolbar, Badge } from 'react-bootstrap'
 
 import Vote from './Vote'
 import CommentEdit from './CommentEdit'
@@ -22,25 +23,30 @@ class Comment extends Component {
 
     return (
       <div>
-        <div>{comment.body}</div>
-        <div>Author: {comment.author}</div>
-        <div>Posted: {prettyDate(comment.timestamp)}</div>                  
-        <div>Current Score: {comment.voteScore}</div>
-        <Vote 
-          postId={comment.parentId}
-          commentId={comment.id}
-        />
-        <button onClick={() => this.toggleModal()}>Edit Comment</button>
-        {this.state.editModalOpen &&
-          <CommentEdit
-            toggleModal={this.toggleModal}
-            comment={comment}
-          />
-        }          
-        <button onClick={() => this.props.deleteComment(comment.parentId, comment.id)}>
-          Delete Comment
-        </button>                    
+        <p className="comment-body">{comment.body}</p>
+        <div className="details">
+          <div>{comment.author} - <small>{prettyDate(comment.timestamp)}</small></div>
+          <div>Votes: <Badge>{comment.voteScore}</Badge><span> </span>
+            <Vote 
+              postId={comment.parentId}
+              commentId={comment.id}
+            />
+          </div>
+        </div>
         <br/>
+        <ButtonToolbar>
+          <Button bsStyle="primary" bsSize="small" onClick={() => this.toggleModal()}>Edit Comment</Button>
+          <Button bsStyle="danger" bsSize="small" onClick={() => this.props.deleteComment(comment.parentId, comment.id)}>
+            Delete Comment
+          </Button>                    
+        </ButtonToolbar>
+
+        {this.state.editModalOpen &&
+            <CommentEdit
+              toggleModal={this.toggleModal}
+              comment={comment}
+            />
+          }            
       </div>
     )
   }

@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { Modal, Button } from 'react-bootstrap'
+import { Modal, Button, ButtonToolbar } from 'react-bootstrap'
 import Form from 'react-jsonschema-form'
 
 import { fetchPutPost } from '../actions'
@@ -42,8 +42,10 @@ class PostEdit extends Component {
             onSubmit={this.onSubmit}
           >
             <div>
-              <Button onClick={() => this.props.toggleModal()}>Cancel</Button>
-              <Button type="submit" bsStyle="primary">Save changes</Button>
+              <ButtonToolbar>
+                <Button onClick={() => this.props.toggleModal()}>Cancel</Button>
+                <Button type="submit" bsStyle="primary">Save changes</Button>
+              </ButtonToolbar>
             </div>
           </Form>
         </Modal.Body>

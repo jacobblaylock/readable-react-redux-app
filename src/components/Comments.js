@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { Grid } from 'react-bootstrap'
 import Comment from './Comment'
 
 class Comments extends Component {
@@ -9,12 +10,17 @@ class Comments extends Component {
       return (
         <div>
           <h4>Comments:</h4>
-            {comments.map(comment => (
-              <Comment
-                key={comment.id}
-                comment={comment}
-              />
-            ))}
+          <Grid fluid={true}>
+              {comments.map(comment => (
+                <div key={comment.id}>
+                  <Comment
+                    key={comment.id}
+                    comment={comment}
+                  />
+                  <hr/>
+                </div>
+              ))}
+          </Grid>
         </div>
       )
     }

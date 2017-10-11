@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { ButtonToolbar, ToggleButtonGroup, ToggleButton } from 'react-bootstrap'
+import { LinkContainer } from 'react-router-bootstrap'
+import { Button, ButtonToolbar, ToggleButtonGroup, ToggleButton, Grid } from 'react-bootstrap'
 import { sortMethod, fetchPosts } from '../actions'
 import Post from './Post'
 import Categories from './Categories'
@@ -41,8 +42,7 @@ class Posts extends Component {
                 <ToggleButton value={4} onClick={() => setSortMethod(sorter.dateDesc)}>Date Desc</ToggleButton>
               </ToggleButtonGroup>
             </ButtonToolbar>
-
-            
+            <Grid fluid={true}>            
               {posts
                 .filter(p => {
                   if(!category || p.category === category) {
@@ -53,11 +53,24 @@ class Posts extends Component {
                 })
                 .sort(sort)             
                 .map((p) => (
-                  <Post 
-                    key={p.id}
-                    post={p}
-                  />
+                  <div key={p.id}>
+                    <Post 
+                      key={p.id}
+                      post={p}
+                    />
+                    <br/>
+                    <ButtonToolbar>
+                      <LinkContainer to={'/' + p.category + '/' + p.id}>
+                        <Button bsStyle="info">View Details</Button>
+                      </LinkContainer>
+                      <Button bsStyle="danger" onClick={() => this.props.deletePost(p.id)}>
+                        Delete Post
+                      </Button>
+                    </ButtonToolbar>
+                    <hr/>
+                  </div>
                 ))}
+            </Grid>
           </div>
         }
         <AddPost/>

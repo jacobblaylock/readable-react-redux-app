@@ -50,7 +50,7 @@ class CommentEdit extends Component {
   }
 }
 
-function mapStateToProps ({ schema }, ownProps) {
+function mapStateToProps ({ schema }) {
   return {
     schema
   }
