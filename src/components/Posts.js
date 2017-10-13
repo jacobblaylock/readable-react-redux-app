@@ -18,11 +18,29 @@ class Posts extends Component {
     if(this.props.categories.length < 1){
       this.props.loadCategories()
     }  
-    if(this.props.posts.length < 1) {
-      //this.props.loadPosts(this.props.category ? this.props.category : '')
-      this.props.loadPosts('')
+
+    if(this.props.category === undefined && this.props.requestedPostCategory !== '') {
+      this.props.loadPosts()
+    }else if(this.props.category && this.props.requestedPostCategory !== '') {
+      if(this.props.requestedPostCategory === null) {
+        this.props.loadPosts(this.props.category) 
+      }else if(this.props.category !== this.props.requestedPostCategory){
+        this.props.loadPosts(this.props.category)
+      }
     }
   }  
+
+  componentWillReceiveProps (nextProps) {
+    if(this.props.requestedPostCategory !== '') {
+      if(this.props.category !== nextProps.category) {
+        if(nextProps.category) {
+          this.props.loadPosts(nextProps.category)
+        }else if(!nextProps.category){
+          this.props.loadPosts()
+        }
+      }      
+    }
+  }
 
   toggleModal = () => {
     this.setState(state => ({
@@ -90,11 +108,12 @@ class Posts extends Component {
   }
 }
 
-function mapStateToProps({ posts, postsRequested, postsReceived, categories, sort }, ownProps) {
+function mapStateToProps({ posts, postsRequested, postsReceived, requestedPostCategory, categories, sort }, ownProps) {
   return {
     posts,
     postsRequested,
     postsReceived,
+    requestedPostCategory, 
     categories,
     sort,
     category: ownProps.match ? ownProps.match.params.category : undefined

@@ -8,6 +8,7 @@ import {
   REQUEST_POSTS,
   LOAD_POSTS,
   RECEIVED_POSTS,
+  REQUESTED_POST_CATEGORY,
   ADD_POST,
   DELETE_POST,
   UPDATE_POST,
@@ -201,6 +202,17 @@ function postsReceived (state = false, action) {
   }
 }
 
+function requestedPostCategory (state = null, action) {
+  const { category } = action
+
+  switch (action.type) {
+    case REQUESTED_POST_CATEGORY :
+      return category
+    default :
+      return state
+  }
+}
+
 function sort (state = '', action) {
   const { sorter } = action
   
@@ -226,6 +238,7 @@ export default combineReducers({
   categories,
   postsRequested,
   postsReceived,
+  requestedPostCategory,
   posts,
   sort,
   schema

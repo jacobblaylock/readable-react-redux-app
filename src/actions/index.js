@@ -8,6 +8,7 @@ export const LOAD_SCHEMA = 'LOAD_SCHEMA'
 export const REQUEST_POSTS = 'REQUEST_POSTS'
 export const LOAD_POSTS = 'LOAD_POSTS'
 export const RECEIVED_POSTS = 'RECEIVED_POSTS'
+export const REQUESTED_POST_CATEGORY = 'REQUESTED_POST_CATEGORY'
 export const ADD_POST = 'ADD_POST'
 export const DELETE_POST = 'DELETE_POST'
 export const UPDATE_POST = 'UPDATE_POST'
@@ -81,11 +82,20 @@ export function receivedPosts(receivedPosts) {
   }
 }
 
-export const fetchPosts = (category) => (dispatch, getState) => {
+export function requestedPostCategory(category) {
+  return {
+    type: REQUESTED_POST_CATEGORY,
+    category
+  }
+}
+
+export const fetchPosts = (category = '') => (dispatch, getState) => {
+  console.log('fetching Post')
   dispatch(requestPosts(true))
   API
   .fetchPosts(category)
   .then(posts => {
+    dispatch(requestedPostCategory(category))
     dispatch(loadPosts(posts))
     dispatch(requestPosts(false))
     dispatch(receivedPosts(true))
