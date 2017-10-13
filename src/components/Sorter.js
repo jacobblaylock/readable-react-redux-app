@@ -11,7 +11,6 @@ class Sorter extends Component {
 
     return (
       <div>
-        <div>Sort By:</div>
         <ButtonToolbar>
           <ToggleButtonGroup type="radio" name="sorter">
             <ToggleButton value={1} onClick={() => setSortMethod(sorter.voteAsc)}>Votes <span className="glyphicon glyphicon-chevron-up" aria-label="ascending"></span></ToggleButton>

@@ -6,7 +6,8 @@ import {
   LOAD_SCHEMA,
 
   REQUEST_POSTS,
-  RECEIVE_POSTS,
+  LOAD_POSTS,
+  RECEIVED_POSTS,
   ADD_POST,
   DELETE_POST,
   UPDATE_POST,
@@ -37,7 +38,7 @@ function posts (state = [], action) {
   let i, c
 
   switch (action.type) {
-    case RECEIVE_POSTS :
+    case LOAD_POSTS :
       return posts.filter(post => !post.deleted)
     case ADD_POST :
       return [
@@ -189,6 +190,17 @@ function postsRequested (state = false, action) {
   }
 }
 
+function postsReceived (state = false, action) {
+  const { receivedPosts } = action
+  
+  switch (action.type) {
+    case RECEIVED_POSTS :
+      return receivedPosts
+    default :
+      return state
+  }
+}
+
 function sort (state = '', action) {
   const { sorter } = action
   
@@ -213,6 +225,7 @@ function schema (state = {post: {schema: {title: {},	properties:{ categories:{}}
 export default combineReducers({
   categories,
   postsRequested,
+  postsReceived,
   posts,
   sort,
   schema

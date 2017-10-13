@@ -6,7 +6,8 @@ export const SORT_METHOD = 'SORT_METHOD'
 export const LOAD_SCHEMA = 'LOAD_SCHEMA'
 
 export const REQUEST_POSTS = 'REQUEST_POSTS'
-export const RECEIVE_POSTS = 'RECEIVE_POSTS'
+export const LOAD_POSTS = 'LOAD_POSTS'
+export const RECEIVED_POSTS = 'RECEIVED_POSTS'
 export const ADD_POST = 'ADD_POST'
 export const DELETE_POST = 'DELETE_POST'
 export const UPDATE_POST = 'UPDATE_POST'
@@ -66,10 +67,17 @@ export function requestPosts(requestingPosts) {
   }
 }
 
-export function receivePosts(posts) {
+export function loadPosts(posts) {
   return {
-    type: RECEIVE_POSTS,
+    type: LOAD_POSTS,
     posts
+  }
+}
+
+export function receivedPosts(receivedPosts) {
+  return {
+    type: RECEIVED_POSTS,
+    receivedPosts
   }
 }
 
@@ -78,8 +86,9 @@ export const fetchPosts = (category) => (dispatch, getState) => {
   API
   .fetchPosts(category)
   .then(posts => {
-    dispatch(receivePosts(posts))
+    dispatch(loadPosts(posts))
     dispatch(requestPosts(false))
+    dispatch(receivedPosts(true))
   })
 }
 
@@ -89,9 +98,10 @@ export const fetchPostDetail = (postId) => (dispatch, getState) => {
   .fetchPostDetail(postId)
   .then(res => API.handleErrors(res))
   .then(post => {
-      dispatch(receivePosts(post))
-      dispatch(requestPosts(false))
-      if(getState().categories.length < 1) dispatch(fetchCategories())
+    dispatch(loadPosts(post))
+    dispatch(requestPosts(false))
+    dispatch(receivedPosts(true))      
+    if(getState().categories.length < 1) dispatch(fetchCategories())
   })
   .catch(res => console.log(`Error fetching post details for id ${postId}`))
 }

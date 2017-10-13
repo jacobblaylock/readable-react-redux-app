@@ -5,7 +5,7 @@ class NotFound extends Component {
   render () {
     return (
       <div>
-        <h1 style={{color: "red"}}>Page Not Found</h1>
+        <h1>Page Not Found</h1>
         <br/>
         <Link to='/' className="h2" style={{color: "blue"}}>Start Over</Link>
       </div>

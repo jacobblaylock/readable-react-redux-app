@@ -1,31 +1,28 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { LinkContainer } from 'react-router-bootstrap'
-import { Button, ButtonToolbar, ToggleButtonGroup, ToggleButton, Grid } from 'react-bootstrap'
-import { sortMethod, fetchPosts, fetchDeletePost } from '../actions'
+import { Button, ButtonToolbar, Grid } from 'react-bootstrap'
+import { fetchPosts, fetchDeletePost, fetchCategories } from '../actions'
 import Post from './Post'
 import Categories from './Categories'
 import Sorter from './Sorter'
 import AddPost from './AddPost'
 import NotFound from './NotFound'
-import { sorter } from '../util/sort'
 
 class Posts extends Component {
   state = {
     addModalOpen: false
   }
 
-  componentDidMount () {
+  componentWillMount () {
+    if(this.props.categories.length < 1){
+      this.props.loadCategories()
+    }  
     if(this.props.posts.length < 1) {
-      this.props.loadPosts(this.props.category ? this.props.category : '')
+      //this.props.loadPosts(this.props.category ? this.props.category : '')
+      this.props.loadPosts('')
     }
   }  
-
-  componentWillReceiveProps(nextProps) {
-    // if(nextProps.category && this.props.posts.filter(p => p.category === nextProps.category) < 1) {
-    //   this.props.loadPosts(nextProps.category ? nextProps.category : '')
-    // }    
-  }
 
   toggleModal = () => {
     this.setState(state => ({
@@ -34,9 +31,9 @@ class Posts extends Component {
   }  
   
   render () {
-    const { posts, postsRequested, categories, sort, category, setSortMethod } = this.props
+    const { posts, postsRequested, postsReceived, categories, sort, category } = this.props
 
-    if(category && !categories.some(c => c.name === category)) return (<NotFound/>)
+    if(postsReceived && category && !categories.some(c => c.name === category)) return (<NotFound/>)
 
     return (
       <div>
@@ -93,10 +90,11 @@ class Posts extends Component {
   }
 }
 
-function mapStateToProps({ posts, postsRequested, categories, sort }, ownProps) {
+function mapStateToProps({ posts, postsRequested, postsReceived, categories, sort }, ownProps) {
   return {
     posts,
     postsRequested,
+    postsReceived,
     categories,
     sort,
     category: ownProps.match ? ownProps.match.params.category : undefined
@@ -106,6 +104,7 @@ function mapStateToProps({ posts, postsRequested, categories, sort }, ownProps) 
 function mapDispatchToProps (dispatch) {
   return {
     loadPosts: (category) => dispatch(fetchPosts(category)),
+    loadCategories: () => dispatch(fetchCategories()),
     deletePost: (postId) => dispatch(fetchDeletePost(postId)) 
   }
 }
