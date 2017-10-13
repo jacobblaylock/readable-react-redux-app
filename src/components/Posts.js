@@ -7,6 +7,7 @@ import Post from './Post'
 import Categories from './Categories'
 import Sorter from './Sorter'
 import AddPost from './AddPost'
+import NotFound from './NotFound'
 import { sorter } from '../util/sort'
 
 class Posts extends Component {
@@ -33,8 +34,9 @@ class Posts extends Component {
   }  
   
   render () {
-    const { posts, postsRequested, sort, category, setSortMethod } = this.props
+    const { posts, postsRequested, categories, sort, category, setSortMethod } = this.props
 
+    if(category && !categories.some(c => c.name === category)) return (<NotFound/>)
 
     return (
       <div>
@@ -91,10 +93,11 @@ class Posts extends Component {
   }
 }
 
-function mapStateToProps({ posts, postsRequested, sort }, ownProps) {
+function mapStateToProps({ posts, postsRequested, categories, sort }, ownProps) {
   return {
     posts,
     postsRequested,
+    categories,
     sort,
     category: ownProps.match ? ownProps.match.params.category : undefined
   }

@@ -52,10 +52,10 @@ export function getCategories({ categories }) {
 export const fetchCategories = () => dispatch => (
   API
     .fetchCategories()
-      .then(categories => {
-        dispatch(getCategories(categories))
-        dispatch(fetchSchema(categories))
-      })
+    .then(categories => {
+      dispatch(getCategories(categories))
+      dispatch(fetchSchema(categories))
+    })
 )
 
 // POSTS
@@ -87,11 +87,13 @@ export const fetchPostDetail = (postId) => (dispatch, getState) => {
   dispatch(requestPosts(true))
   API
   .fetchPostDetail(postId)
+  .then(res => API.handleErrors(res))
   .then(post => {
-    dispatch(receivePosts(post))
-    dispatch(requestPosts(false))
-    if(getState().categories.length < 1) dispatch(fetchCategories())
+      dispatch(receivePosts(post))
+      dispatch(requestPosts(false))
+      if(getState().categories.length < 1) dispatch(fetchCategories())
   })
+  .catch(res => console.log(`Error fetching post details for id ${postId}`))
 }
 
 export function addPost(post) {

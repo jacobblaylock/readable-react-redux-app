@@ -158,3 +158,8 @@ export function fetchPutComment (comment) {
   return fetch(url, options)
     .then(res => res.json())
 }
+
+export function handleErrors(res) {
+  if (!res.ok) throw Error(res.statusText);
+  return res;
+}

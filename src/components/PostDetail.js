@@ -7,6 +7,7 @@ import Comments from './Comments'
 import PostEdit from './PostEdit'
 import AddComment from './AddComment'
 import Categories from './Categories'
+import NotFound from './NotFound'
 
 class PostDetail extends Component {
   state = {
@@ -41,7 +42,7 @@ class PostDetail extends Component {
 
   render () {
     const { post, category } = this.props
-
+    if(!post) return (<NotFound/>)
     return (
       <div>
         <Categories
