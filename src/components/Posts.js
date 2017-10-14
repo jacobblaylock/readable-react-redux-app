@@ -18,10 +18,12 @@ class Posts extends Component {
   }
 
   componentWillMount () {
+    // Check if categories are already loaded and fetch if necessary.
     if(this.props.categories.length < 1){
       this.props.loadCategories()
     }  
 
+    // Check if posts for the selected category have already been loaded and fetch if necessary.
     if(this.props.category === undefined && this.props.requestedPostCategory !== '') {
       this.props.loadPosts()
     }else if(this.props.category && this.props.requestedPostCategory !== '') {
@@ -34,6 +36,7 @@ class Posts extends Component {
   }  
 
   componentWillReceiveProps (nextProps) {
+    // Check if posts for the selected category have already been loaded and fetch if necessary.    
     if(this.props.requestedPostCategory !== '' && this.props.category !== nextProps.category) {
       this.props.loadPosts(nextProps.category ? nextProps.category : '')
     }

@@ -18,3 +18,6 @@ Navigate to the root of the project directory and run the following commands:
 ```
 
 This should automatically launch the app in your browser, but if it does not, navigate to localhost:3000 in your favorite browser.
+
+##Key Dependencies
+**react-jsonschema-form** - Used to generate forms using JSON schema.

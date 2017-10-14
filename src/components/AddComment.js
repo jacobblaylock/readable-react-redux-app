@@ -16,6 +16,7 @@ class AddComment extends Component {
       this.loadFormData()
     }
 
+    // Reset Form
     loadFormData = () => {
       this.setState({
         formData: {}
