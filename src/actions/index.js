@@ -90,7 +90,6 @@ export function requestedPostCategory(category) {
 }
 
 export const fetchPosts = (category = '') => (dispatch, getState) => {
-  console.log('fetching Post')
   dispatch(requestPosts(true))
   API
   .fetchPosts(category)

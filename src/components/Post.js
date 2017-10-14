@@ -1,7 +1,10 @@
+// Node Module Imports
 import React, { Component } from 'react'
 import { Label, Badge } from 'react-bootstrap'
-import { prettyDate } from '../util/date'
+// Component Imports
 import Vote from './Vote'
+// Local Imports
+import { prettyDate } from '../util/date'
 
 class Post extends Component {
 

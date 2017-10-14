@@ -1,8 +1,9 @@
+// Node Module Imports
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Modal, Button } from 'react-bootstrap'
 import Form from 'react-jsonschema-form'
-
+// Action Imports
 import { fetchPutComment } from '../actions'
 
 class CommentEdit extends Component {

@@ -1,5 +1,7 @@
+// Node Module Imports
 import React, { Component } from 'react'
 import { Grid } from 'react-bootstrap'
+// Component Imports
 import Comment from './Comment'
 
 class Comments extends Component {

@@ -1,7 +1,10 @@
+// Node Module Imports
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { fetchPostDetail, fetchDeletePost } from '../actions'
 import { Grid, Button, ButtonToolbar } from 'react-bootstrap'
+// Action Imports
+import { fetchPostDetail, fetchDeletePost } from '../actions'
+// Component Imports
 import Post from './Post'
 import Comments from './Comments'
 import PostEdit from './PostEdit'

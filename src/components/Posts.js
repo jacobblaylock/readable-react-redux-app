@@ -1,8 +1,11 @@
+// Node Module Imports
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { LinkContainer } from 'react-router-bootstrap'
 import { Button, ButtonToolbar, Grid } from 'react-bootstrap'
+// Action Imports
 import { fetchPosts, fetchDeletePost, fetchCategories } from '../actions'
+// Component Imports
 import Post from './Post'
 import Categories from './Categories'
 import Sorter from './Sorter'
@@ -44,7 +47,6 @@ class Posts extends Component {
   
   render () {
     const { posts, postsRequested, postsReceived, categories, sort, category } = this.props
-    console.log(sort)
 
     if(postsReceived && category && !categories.some(c => c.name === category)) return (<NotFound/>)
 

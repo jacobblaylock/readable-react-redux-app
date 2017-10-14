@@ -1,3 +1,4 @@
+// Functions to be used for sorting posts
 export const sorter = {
   voteAsc: function (a,b) {
     return a.voteScore-b.voteScore

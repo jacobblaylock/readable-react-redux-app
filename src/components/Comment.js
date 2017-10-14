@@ -1,10 +1,13 @@
+// Node Module Imports
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Button, ButtonToolbar, Badge } from 'react-bootstrap'
-
+// Component Imports
 import Vote from './Vote'
 import CommentEdit from './CommentEdit'
+// Action Imports
 import { fetchDeleteComment } from '../actions'
+// Local Imports
 import { prettyDate } from '../util/date'
 
 class Comment extends Component {

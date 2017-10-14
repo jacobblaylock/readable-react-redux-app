@@ -1,6 +1,8 @@
+// Node Module Imports
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Button, ButtonGroup } from 'react-bootstrap'
+// Action Imports
 import { fetchVote } from '../actions'
 
 class Vote extends Component {

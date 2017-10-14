@@ -1,3 +1,5 @@
+// This function contains the schemas to be applied to react-jsonschema-form to 
+// generate the Add/Edit Post and Comment forms.
 export function formSchema(categoryArray) {
 
   return {

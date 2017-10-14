@@ -1,7 +1,10 @@
+// Node Module Imports
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { ButtonToolbar, ToggleButtonGroup, ToggleButton } from 'react-bootstrap'
+// Action Imports
 import { sortMethod } from '../actions'
+// Local Imports
 import { sorter } from '../util/sort'
 
 class Sorter extends Component {

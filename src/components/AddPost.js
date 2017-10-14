@@ -1,10 +1,10 @@
+// Node Module Imports
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Modal, Button, ButtonToolbar } from 'react-bootstrap'
-
 import Form from 'react-jsonschema-form'
 import uuidv1 from 'uuid/v1'
-
+// Action Imports
 import { fetchAddPost } from '../actions'
 
 class AddPost extends Component {

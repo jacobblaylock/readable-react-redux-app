@@ -1,7 +1,9 @@
+// Node Module Imports
 import React, { Component } from 'react'
 import { Nav, NavItem, Navbar } from 'react-bootstrap'
 import { LinkContainer } from 'react-router-bootstrap'
 import { connect } from 'react-redux'
+// Action Imports
 import { fetchCategories } from '../actions'
 
 class Categories extends Component {
