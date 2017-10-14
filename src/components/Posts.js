@@ -31,14 +31,8 @@ class Posts extends Component {
   }  
 
   componentWillReceiveProps (nextProps) {
-    if(this.props.requestedPostCategory !== '') {
-      if(this.props.category !== nextProps.category) {
-        if(nextProps.category) {
-          this.props.loadPosts(nextProps.category)
-        }else if(!nextProps.category){
-          this.props.loadPosts()
-        }
-      }      
+    if(this.props.requestedPostCategory !== '' && this.props.category !== nextProps.category) {
+      this.props.loadPosts(nextProps.category ? nextProps.category : '')
     }
   }
 
@@ -50,6 +44,7 @@ class Posts extends Component {
   
   render () {
     const { posts, postsRequested, postsReceived, categories, sort, category } = this.props
+    console.log(sort)
 
     if(postsReceived && category && !categories.some(c => c.name === category)) return (<NotFound/>)
 

@@ -1,4 +1,5 @@
 import { combineReducers } from 'redux'
+import { sorter } from '../util/sort'
 
 import {
   GET_CATEGORIES,
@@ -22,6 +23,8 @@ import {
   DELETE_COMMENT,
   UPDATE_COMMENT
 } from '../actions'
+
+const initialSortState = sorter.voteDesc
 
 function categories (state = [], action) {
   const { categories } = action
@@ -213,7 +216,7 @@ function requestedPostCategory (state = null, action) {
   }
 }
 
-function sort (state = '', action) {
+function sort (state = initialSortState, action) {
   const { sorter } = action
   
   switch (action.type) {
