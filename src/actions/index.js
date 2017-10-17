@@ -1,31 +1,11 @@
 import * as API from '../util/api'
 import { formSchema } from '../util/schema'
-
-export const GET_CATEGORIES = 'GET_CATEGORIES'
-export const SORT_METHOD = 'SORT_METHOD'
-export const LOAD_SCHEMA = 'LOAD_SCHEMA'
-
-export const REQUEST_POSTS = 'REQUEST_POSTS'
-export const LOAD_POSTS = 'LOAD_POSTS'
-export const RECEIVED_POSTS = 'RECEIVED_POSTS'
-export const REQUESTED_POST_CATEGORY = 'REQUESTED_POST_CATEGORY'
-export const ADD_POST = 'ADD_POST'
-export const DELETE_POST = 'DELETE_POST'
-export const UPDATE_POST = 'UPDATE_POST'
-
-export const VOTE_UP_POST = 'VOTE_UP_POST'
-export const VOTE_DOWN_POST = 'VOTE_DOWN_POST'
-export const VOTE_UP_COMMENT = 'VOTE_UP_COMMENT'
-export const VOTE_DOWN_COMMENT = 'VOTE_DOWN_COMMENT'
-
-export const ADD_COMMENT = 'ADD_COMMENT'
-export const DELETE_COMMENT = 'DELETE_COMMENT'
-export const UPDATE_COMMENT = 'UPDATE_COMMENT'
+import * as actionTypes from './types'
 
 // SORT
 export function sortMethod(sorter) {
   return {
-    type: SORT_METHOD,
+    type: actionTypes.SORT_METHOD,
     sorter
   }
 }
@@ -33,7 +13,7 @@ export function sortMethod(sorter) {
 // SCHEMA
 export function loadSchema(schema) {
   return{
-    type: LOAD_SCHEMA,
+    type: actionTypes.LOAD_SCHEMA,
     schema
   }
 }
@@ -46,7 +26,7 @@ export const fetchSchema = (categories) => dispatch => {
 // CATEGORIES
 export function getCategories({ categories }) {
   return {
-    type: GET_CATEGORIES,
+    type: actionTypes.GET_CATEGORIES,
     categories
   }
 }
@@ -63,28 +43,28 @@ export const fetchCategories = () => dispatch => (
 // POSTS
 export function requestPosts(requestingPosts) {
   return {
-    type: REQUEST_POSTS,
+    type: actionTypes.REQUEST_POSTS,
     requestingPosts
   }
 }
 
 export function loadPosts(posts) {
   return {
-    type: LOAD_POSTS,
+    type: actionTypes.LOAD_POSTS,
     posts
   }
 }
 
 export function receivedPosts(receivedPosts) {
   return {
-    type: RECEIVED_POSTS,
+    type: actionTypes.RECEIVED_POSTS,
     receivedPosts
   }
 }
 
 export function requestedPostCategory(category) {
   return {
-    type: REQUESTED_POST_CATEGORY,
+    type: actionTypes.REQUESTED_POST_CATEGORY,
     category
   }
 }
@@ -117,7 +97,7 @@ export const fetchPostDetail = (postId) => (dispatch, getState) => {
 
 export function addPost(post) {
   return {
-    type: ADD_POST,
+    type: actionTypes.ADD_POST,
     post
   }
 }
@@ -130,7 +110,7 @@ export const fetchAddPost = (post) => dispatch => {
 
 export function deletePost(postId) {
   return {
-    type: DELETE_POST,
+    type: actionTypes.DELETE_POST,
     postId
   }
 }
@@ -143,7 +123,7 @@ export const fetchDeletePost = (postId) => dispatch => {
 
 export function updatePost(post) {
   return {
-    type: UPDATE_POST,
+    type: actionTypes.UPDATE_POST,
     post
   }
 }
@@ -157,21 +137,21 @@ export const fetchPutPost = (post) => dispatch => {
 // VOTE
 export function voteUpPost(postId) {
   return {
-    type: VOTE_UP_POST,
+    type: actionTypes.VOTE_UP_POST,
     postId
   }
 }
 
 export function voteDownPost(postId) {
   return {
-    type: VOTE_DOWN_POST,
+    type: actionTypes.VOTE_DOWN_POST,
     postId
   }
 }
 
 export function voteUpComment(postId, commentId) {
   return {
-    type: VOTE_UP_COMMENT,
+    type: actionTypes.VOTE_UP_COMMENT,
     postId,
     commentId
   }
@@ -179,7 +159,7 @@ export function voteUpComment(postId, commentId) {
 
 export function voteDownComment(postId, commentId) {
   return {
-    type: VOTE_DOWN_COMMENT,
+    type: actionTypes.VOTE_DOWN_COMMENT,
     postId,
     commentId
   }
@@ -212,7 +192,7 @@ export const fetchVote = (postId, commentId, vote) => dispatch => {
 // COMMENTS
 export function addComment(comment) {
   return {
-    type: ADD_COMMENT,
+    type: actionTypes.ADD_COMMENT,
     comment
   }
 }
@@ -225,7 +205,7 @@ export const fetchAddComment = (comment) => dispatch => {
 
 export function deleteComment(postId, commentId) {
   return {
-    type: DELETE_COMMENT,
+    type: actionTypes.DELETE_COMMENT,
     postId,
     commentId
   }
@@ -239,7 +219,7 @@ export const fetchDeleteComment = (postId, commentId) => dispatch => {
 
 export function updateComment(comment) {
   return {
-    type: UPDATE_COMMENT,
+    type: actionTypes.UPDATE_COMMENT,
     comment
   }
 }

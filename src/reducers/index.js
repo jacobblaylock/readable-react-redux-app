@@ -22,7 +22,7 @@ import {
   ADD_COMMENT,
   DELETE_COMMENT,
   UPDATE_COMMENT
-} from '../actions'
+} from '../actions/types'
 
 const initialSortState = sorter.voteDesc
 
