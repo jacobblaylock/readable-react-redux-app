@@ -11,10 +11,13 @@ import Categories from './Categories'
 import Sorter from './Sorter'
 import AddPost from './AddPost'
 import NotFound from './NotFound'
+import PostEdit from './PostEdit'
 
 class Posts extends Component {
   state = {
-    addModalOpen: false
+    editModalOpen: false,
+    addModalOpen: false,
+    selectedPost: undefined
   }
 
   componentWillMount () {
@@ -42,7 +45,15 @@ class Posts extends Component {
     }
   }
 
-  toggleModal = () => {
+  toggleEditModal = (p) => {
+    this.setState(state => ({
+      editModalOpen: !state.editModalOpen,
+      selectedPost: p
+    }))
+
+  }
+
+  toggleAddModal = () => {
     this.setState(state => ({
       addModalOpen: !state.addModalOpen
     }))
@@ -82,6 +93,7 @@ class Posts extends Component {
                     />
                     <br/>
                     <ButtonToolbar>
+                      <Button bsStyle="primary" onClick={() => this.toggleEditModal(p)}>Edit Post</Button>    
                       <LinkContainer to={'/' + p.category + '/' + p.id}>
                         <Button bsStyle="info">View Details</Button>
                       </LinkContainer>
@@ -95,11 +107,18 @@ class Posts extends Component {
             </Grid>
           </div>
         }
-        
-        <Button bsStyle="success" bsSize="large" className="add-button" onClick={() => this.toggleModal()}>Add Post</Button>
+
+        {this.state.editModalOpen &&
+          <PostEdit
+            toggleModal={this.toggleEditModal}
+            post={this.state.selectedPost}
+          />
+        }          
+
+        <Button bsStyle="success" bsSize="large" className="add-button" onClick={() => this.toggleAddModal()}>Add Post</Button>
         {this.state.addModalOpen &&
           <AddPost
-            toggleModal={this.toggleModal}
+            toggleModal={this.toggleAddModal}
             category={category}
           />
         }
