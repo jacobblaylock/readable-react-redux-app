@@ -21,27 +21,28 @@ class Posts extends Component {
   }
 
   componentWillMount () {
+    const { categories, loadCategories, category, requestedPostCategory, loadPosts } = this.props
     // Check if categories are already loaded and fetch if necessary.
-    if(this.props.categories.length < 1){
-      this.props.loadCategories()
-    }  
+    categories.length < 1 && loadCategories()    
 
     // Check if posts for the selected category have already been loaded and fetch if necessary.
-    if(this.props.category === undefined && this.props.requestedPostCategory !== '') {
-      this.props.loadPosts()
-    }else if(this.props.category && this.props.requestedPostCategory !== '') {
-      if(this.props.requestedPostCategory === null) {
-        this.props.loadPosts(this.props.category) 
-      }else if(this.props.category !== this.props.requestedPostCategory){
-        this.props.loadPosts(this.props.category)
+    if(category === undefined && requestedPostCategory !== '') {
+      loadPosts()
+    }else if(category && requestedPostCategory !== '') {
+      if(requestedPostCategory === null) {
+        loadPosts(category) 
+      }else if(category !== requestedPostCategory){
+        loadPosts(category)
       }
     }
   }  
 
   componentWillReceiveProps (nextProps) {
+    const { requestedPostCategory, category, loadPosts } = this.props
+
     // Check if posts for the selected category have already been loaded and fetch if necessary.    
-    if(this.props.requestedPostCategory !== '' && this.props.category !== nextProps.category) {
-      this.props.loadPosts(nextProps.category ? nextProps.category : '')
+    if(requestedPostCategory !== '' && category !== nextProps.category) {
+      loadPosts(nextProps.category ? nextProps.category : '')
     }
   }
 
